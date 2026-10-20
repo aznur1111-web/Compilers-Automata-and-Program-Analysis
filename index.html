@@ -1,4 +1,11 @@
-<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><meta name="description" content="Az Compilers, Automata &amp; Program Analysis Lab"><title>Az Compilers, Automata &amp; Program Analysis Lab</title>
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="Az Compilers, Automata &amp; Program Analysis Lab">
+<title>Az Compilers, Automata &amp; Program Analysis Lab</title>
 <style>
 :root{color-scheme:dark;--bg:#111722;--panel:#192230;--panel2:#202b3a;--panel3:#141c27;--line:#2c394b;--line2:#3b4b61;--text:#e8eef7;--muted:#a7b4c7;--subtle:#8190a5;--accent:#8ab4f8;--strong:#c9ddff;--good:#9ed7bd;--warn:#edc477;--bad:#ff929e;--shadow:none;--radius:13px}
 :root[data-theme=light]{color-scheme:light;--bg:#f4f6f8;--panel:#fff;--panel2:#f7f9fb;--panel3:#f0f4f8;--line:#dce2e9;--line2:#cbd4df;--text:#17212d;--muted:#596a7e;--subtle:#718197;--accent:#315fa2;--strong:#244a82;--good:#176b4c;--warn:#8c5c04;--bad:#b33143;--shadow:0 8px 24px rgba(20,35,50,.05)}
@@ -97,13 +104,14 @@ td{color:var(--muted)}
 .toast{position:fixed;z-index:99;bottom:20px;left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;background:var(--panel);border:1px solid var(--line2);border-radius:9px;padding:11px 15px;box-shadow:var(--shadow);font-size:12px;transition:opacity .14s,transform .14s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .footer{font-size:10.5px;color:var(--subtle);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 2px 14px;align-items:center}
-.plot{width:100%;height:auto;display:block;background:var(--bg);border:1px solid var(--line);border-radius:8px;margin:6px 0}
 @media(max-width:1080px){.layout{grid-template-columns:240px minmax(360px,1fr)}main{padding:24px 22px 36px}}
 @media(max-width:840px){.topbar{height:auto;min-height:60px;flex-wrap:wrap;gap:10px;padding:10px 14px}.top-meta{display:none}.top-actions{margin-left:auto}.top-actions label{display:none}.layout{display:block}.sidebar{position:static;height:auto;max-height:none;border:0;border-bottom:1px solid var(--line);padding:14px}.tree{max-height:260px;overflow:auto}.side-foot{display:none}main{padding:20px 15px 32px}.idea{grid-template-columns:1fr}.mental{order:-1}.stats{grid-template-columns:1fr 1fr}.chapter-cards,.two,.lab-cols{grid-template-columns:1fr}}
 @media(max-width:520px){.brand small{display:none}.brand-mark{width:30px;height:30px}.brand strong{font-size:12px}.top-actions select{max-width:92px;padding:6px;font-size:10px}.top-actions .btn{padding:6px 8px;font-size:10px}.chapter-cards{grid-template-columns:1fr}.tiles{grid-template-columns:1fr}.home-hero{padding:20px}.home-hero h1{font-size:30px}.header h1{font-size:27px}.body,.panel-head{padding-left:15px;padding-right:15px}.footer{display:block}.footer span{display:block;margin-bottom:6px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 @media print{.topbar,.sidebar,.header-actions,.lab-top,.btn,.toast{display:none!important}.layout{display:block}main{padding:0;max-width:none}.panel,.home-hero{break-inside:avoid;box-shadow:none}body{background:#fff;color:#111}}
-</style></head><body>
+</style>
+</head>
+<body>
 
 <header class="topbar">
   <a class="brand" href="#home" id="homeLink"><span class="brand-mark">Az</span><span><strong>Az Compilers, Automata &amp; Program Analysis Lab</strong><small>COMPILERS · AUTOMATA · ANALYSIS</small></span></a>
@@ -181,7 +189,11 @@ function mk(o){
   level:o.level||2
  },o);
 }
-
+</script>
+<script>
+/* ============================================================
+   Lesson catalog
+   ============================================================ */
 const RAW=[
 /* ================= 1 Foundations ================= */
 {id:"source-tokens",title:"Source text, tokens and lexemes",level:2,kind:"Foundation",status:"Runnable teaching lab",
@@ -232,7 +244,7 @@ const RAW=[
  pitfall:"Forgetting to add the epsilon transition for the empty alternative (a|) gives a wrong language.",
  question:"How many states does the Thompson NFA have for a regex of length n?",
  answer:"At most 2n states. Each character adds two states, and each operator adds two more.",
- demo:"regex-nfa",sample:"a(b|c)*d",refs:[
+ demo:"regex-fsm",sample:"a(b|c)*d",refs:[
   ["Thompson, Programming techniques: Regular expression search algorithm, CACM 1968","https://doi.org/10.1145/363347.363387"],
   ["Aho et al., Compilers: Principles, Techniques, and Tools, Ch. 3","https://www.pearson.com/en-us/subject-catalog/p/compilers-principles-techniques-and-tools/P200000003409"],
   ["Hopcroft et al., Introduction to Automata Theory, Ch. 3","https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003409"]]},
@@ -310,7 +322,7 @@ const RAW=[
  mental:"Every expression has a type; operations require compatible types",
  mentalText:"The rule for addition: if e1 has type int and e2 has type int, e1 + e2 has type int. If either is a float, the result is float. If either is a string, error (or coercion).",
  steps:["Assign types to literals and variables.","Walk the AST, inferring types bottom-up.","Check that each operation is valid for its operand types.","Unify types where the language allows polymorphism.","Report type errors with locations."],
- pseudo:"Typing rules (judgment: Gamma |- e : T):\n\n  Gamma |- n : int\n  Gamma |- x : Gamma(x)\n  Gamma |- e1 : int   Gamma |- e2 : int\n  ---------------------------------\n         Gamma |- e1 + e2 : int\n\n  Gamma |- e1 : float  Gamma |- e2 : float\n  -----------------------------------------\n         Gamma |- e1 + e2 : float\n\n  Gamma |- e1 : T1   Gamma |- e2 : T2   T1 ~ T2\n  -----------------------------------------------\n         Gamma |- e1 == e2 : bool\n\n  Gamma |- e1 : T1  Gamma |- e2 : T2\n  -----------------------------------\n   Gamma |- if e1 then e2 else e3 : T2 if T1 = bool\n\nSubtyping:\n  T1 <: T2 means T1 is a subtype of T2\n  if e : T1 and T1 <: T2 then e : T2\n\nCoercions:\n  int -> float (implicit)\n  float -> int (explicit, truncation)",
+ pseudo:"Typing rules (judgment: Gamma |- e : T):\n\n  Gamma |- n : int\n  Gamma |- x : Gamma(x)\n  Gamma |- e1 : int   Gamma |- e2 : int\n  ---------------------------------\n         Gamma |- e1 + e2 : int\n\n  Gamma |- e1 : float  Gamma |- e2 : float\n  -----------------------------------------\n         Gamma |- e1 + e2 : float\n\n  Gamma |- e1 : T1   Gamma |- e2 : T2   T1 ~ T2\n  -----------------------------------------------\n         Gamma |- e1 == e2 : bool\n\nSubtyping:\n  T1 <: T2 means T1 is a subtype of T2\n  if e : T1 and T1 <: T2 then e : T2\n\nCoercions:\n  int -> float (implicit)\n  float -> int (explicit, truncation)",
  invariant:"Type checking must be sound: a well-typed program does not get stuck at a type error. It is not always complete (some programs are rejected unnecessarily).",
  uses:"Every statically typed language: C, Java, Haskell, Rust, TypeScript, Swift.",
  strength:"Catches errors at compile time. Enables optimization. Documents intent.",
@@ -327,7 +339,7 @@ const RAW=[
  mental:"Solve type equations by unification, generalize with let",
  mentalText:"For \\x. x, the type is a -> a. For let id = \\x. x in (id 1, id true), id is generalized to forall a. a -> a and instantiated at int and bool.",
  steps:["Assign type variables to unknown types.","Generate type equations from the AST.","Unify the equations with the occurs check.","Generalize at let bindings (quantify free type variables).","Instantiate at uses."],
- pseudo:"Types:\n  T = int | bool | T -> T | a (type variable)\n\nUnification:\n  unify(int, int) = ok\n  unify(a, T) = bind a to T (with occurs check)\n  unify(T1 -> T2, T3 -> T4) = unify(T1, T3) and unify(T2, T4)\n  unify(int, bool) = error\n\nAlgorithm W:\n  W(Gamma, x) = (instantiate(Gamma(x)), empty_subst)\n  W(Gamma, \\x. e):\n    beta = fresh type variable\n    (T, S) = W(Gamma + {x: beta}, e)\n    return (S(beta) -> T, S)\n  W(Gamma, e1 e2):\n    (T1, S1) = W(Gamma, e1)\n    (T2, S2) = W(S1(Gamma), e2)\n    beta = fresh type variable\n    S3 = unify(S2(T1), T2 -> beta)\n    return (S3(beta), S3 . S2 . S1)\n  W(Gamma, let x = e1 in e2):\n    (T1, S1) = W(Gamma, e1)\n    Gamma' = S1(Gamma)\n    T1' = generalize(Gamma', T1)   # quantify free type vars\n    (T2, S2) = W(Gamma' + {x: T1'}, e2)\n    return (T2, S2 . S1)\n\nGeneralization:\n  gen(Gamma, T) = forall a1...an. T\n  where a1...an = free(T) \\ free(Gamma)\n\nOccurs check:\n  unify(a, T) fails if a occurs in T\n  prevents infinite types like a = a -> a",
+ pseudo:"Types:\n  T = int | bool | T -> T | a (type variable)\n\nUnification:\n  unify(int, int) = ok\n  unify(a, T) = bind a to T (with occurs check)\n  unify(T1 -> T2, T3 -> T4) = unify(T1, T3) and unify(T2, T4)\n  unify(int, bool) = error\n\nAlgorithm W:\n  W(Gamma, x) = (instantiate(Gamma(x)), empty_subst)\n  W(Gamma, \\x. e):\n    beta = fresh type variable\n    (T, S) = W(Gamma + {x: beta}, e)\n    return (S(beta) -> T, S)\n  W(Gamma, e1 e2):\n    (T1, S1) = W(Gamma, e1)\n    (T2, S2) = W(S1(Gamma), e2)\n    beta = fresh type variable\n    S3 = unify(S2(T1), T2 -> beta)\n    return (S3(beta), S3 . S2 . S1)\n\nOccurs check:\n  unify(a, T) fails if a occurs in T\n  prevents infinite types like a = a -> a",
  invariant:"The inferred type is the most general type (principal type). Any other type is a specialization.",
  uses:"Haskell, ML, OCaml, F#, Elm, Rust (partial), TypeScript (partial).",
  strength:"No type annotations needed. Principal types. Well-understood.",
@@ -335,7 +347,7 @@ const RAW=[
  pitfall:"Forgetting the occurs check allows infinite types like a = a -> a, which break the type system.",
  question:"What is the most general type of \\x. \\y. x?",
  answer:"a -> b -> a. x has type a and y has type b, and the result is x, so the type is a -> b -> a.",
- demo:"hm",sample:"\\x. x\n(\\x. x) 1\nlet id = \\x. x in id",refs:[
+ demo:"hm",sample:"\\x. x\n(\\x. x) y\n\\x. \\y. x",refs:[
   ["Hindley, The principal type-scheme of an object in combinatory logic, Trans. AMS 1969","https://doi.org/10.1090/S0002-9947-1969-0252775-1"],
   ["Milner, A theory of type polymorphism in programming, JCSS 1978","https://doi.org/10.1016/0022-0000(78)90014-4"],
   ["Pierce, Types and Programming Languages, Ch. 22","https://mitpress.mit.edu/9780262162098/types-and-programming-languages/"]]},
@@ -345,7 +357,7 @@ const RAW=[
  mental:"Merge states that behave identically",
  mentalText:"Two states are equivalent if they accept the same set of strings. Partition states into accepting and non-accepting, then refine by behavior on each symbol.",
  steps:["Remove unreachable states.","Partition states into accepting and non-accepting.","Refine: split each block by the blocks of its transitions.","Repeat until no block splits.","Each block becomes a state of the minimal DFA."],
- pseudo:"Hopcroft's algorithm:\n  P = {F, Q \\ F}       # accepting and non-accepting\n  W = {F}                # worklist\n  while W is not empty:\n    A = W.pop()\n    for each symbol c:\n      X = set of states with a transition on c into A\n      for each block Y in P that intersects X:\n        split Y into Y_n X and Y & X\n        replace Y in P with the two pieces\n        update W accordingly\n  return P as the minimal DFA\n\nTime: O(n log n)\n\nMyhill-Nerode:\n  the minimal DFA is unique up to isomorphism\n  states correspond to equivalence classes of the indistinguishability relation",
+ pseudo:"Hopcroft's algorithm:\n  P = {F, Q \\ F}       # accepting and non-accepting\n  W = {F}                # worklist\n  while W is not empty:\n    A = W.pop()\n    for each symbol c:\n      X = set of states with a transition on c into A\n      for each block Y in P that intersects X:\n        split Y into Y n X and Y & X\n        replace Y in P with the two pieces\n        update W accordingly\n  return P as the minimal DFA\n\nTime: O(n log n)\n\nMyhill-Nerode:\n  the minimal DFA is unique up to isomorphism\n  states correspond to equivalence classes of the indistinguishability relation",
  invariant:"The minimal DFA is unique (up to state renaming). It has the fewest states of any DFA for the language.",
  uses:"Lexer generation, hardware design, protocol verification, model checking.",
  strength:"Smaller DFAs are faster and use less memory. Well-understood.",
@@ -362,7 +374,7 @@ const RAW=[
  mental:"An FSM with a stack for nesting",
  mentalText:"Balanced parentheses: push on '(', pop on ')'. Accept if the stack is empty at the end. The stack gives unbounded memory.",
  steps:["Read the input.","For each symbol, decide whether to push, pop or neither, based on the current state and stack top.","Accept if a final state is reached with the stack in the accepted configuration.","Equivalently, derive the string from the grammar."],
- pseudo:"Pushdown automaton:\n  M = (Q, Sigma, Gamma, delta, q0, Z0, F)\n  Q: states\n  Sigma: input alphabet\n  Gamma: stack alphabet\n  delta: transition function\n  q0: start state\n  Z0: initial stack symbol\n  F: accepting states\n\nTransition:\n  delta(q, a, X) contains (p, gamma)\n  read a, pop X, push gamma, move to p\n\nExample: balanced parentheses\n  Q = {q0, q1}, Sigma = {(, )}, Gamma = {Z, (\n  delta(q0, (, Z) = (q0, ( Z)\n  delta(q0, (, () = (q0, ( (\n  delta(q0, ), () = (q0, epsilon)\n  delta(q0, epsilon, Z) = (q1, Z)\n\nContext-free grammar:\n  S -> ( S ) S | epsilon\n\nEquivalence:\n  PDA (accept by final state) = CFG\n\nDeterministic PDA < CFG:\n  deterministic PDAs recognize a strict subset (DCFL)",
+ pseudo:"Pushdown automaton:\n  M = (Q, Sigma, Gamma, delta, q0, Z0, F)\n\nTransition:\n  delta(q, a, X) contains (p, gamma)\n  read a, pop X, push gamma, move to p\n\nExample: balanced parentheses\n  S -> ( S ) S | epsilon\n\nEquivalence:\n  PDA (accept by final state) = CFG\n\nDeterministic PDA < CFG:\n  deterministic PDAs recognize a strict subset (DCFL)",
  invariant:"The stack is LIFO. The PDA can only inspect the top of the stack.",
  uses:"Parsing, natural language processing, XML/HTML processing, protocol verification.",
  strength:"More powerful than FSM. Handles nesting.",
@@ -379,7 +391,7 @@ const RAW=[
  mental:"CYK: fill a table bottom-up; Earley: track items across positions",
  mentalText:"CYK: table[i][j] = nonterminals that derive the substring i..j. Earley: at each position, keep the set of productions being parsed and how far they have progressed.",
  steps:["CYK: convert the grammar to CNF.","CYK: fill the table for spans of increasing length.","CYK: accept if S is in table[0][n-1].","Earley: maintain a set of items at each position.","Earley: apply prediction, scanning and completion until no new items."],
- pseudo:"CYK:\n  table = n x n of sets of nonterminals\n  for i in 1..n:\n    for A -> w_i: table[i][i].add(A)\n  for length in 2..n:\n    for i in 1..n-length+1:\n      j = i + length - 1\n      for k in i..j-1:\n        for A -> B C:\n          if B in table[i][k] and C in table[k+1][j]:\n            table[i][j].add(A)\n  accept if S in table[1][n]\n\nEarley:\n  item = (production, dot position, start position)\n  chart[i] = set of items at position i\n\n  initialize: chart[0] with (S -> . alpha, 0)\n  for i in 0..n:\n    for each item in chart[i]:\n      if dot before a nonterminal B:\n        # prediction\n        for each B -> gamma: add (B -> . gamma, i) to chart[i]\n      elif dot before a terminal a:\n        # scanning\n        if input[i] == a: add (A -> alpha a . beta, j) to chart[i+1]\n      else:\n        # completion\n        for each (B -> gamma ., j) in chart[j]:\n          add (A -> alpha B . beta, j) to chart[i]\n  accept if (S -> alpha ., 0) in chart[n]\n\nComplexity:\n  CYK: O(n^3 |G|)\n  Earley: O(n^3) general, O(n^2) unambiguous, O(n) for many practical grammars",
+ pseudo:"CYK:\n  table = n x n of sets of nonterminals\n  for i in 1..n:\n    for A -> w_i: table[i][i].add(A)\n  for length in 2..n:\n    for i in 1..n-length+1:\n      j = i + length - 1\n      for k in i..j-1:\n        for A -> B C:\n          if B in table[i][k] and C in table[k+1][j]:\n            table[i][j].add(A)\n  accept if S in table[1][n]\n\nEarley:\n  item = (production, dot position, start position)\n  chart[i] = set of items at position i\n\n  initialize: chart[0] with (S -> . alpha, 0)\n  for i in 0..n:\n    for each item in chart[i]:\n      if dot before a nonterminal B:\n        for each B -> gamma: add (B -> . gamma, i) to chart[i]\n      elif dot before a terminal a:\n        if input[i] == a: add (A -> alpha a . beta, j) to chart[i+1]\n      else:\n        for each (B -> gamma ., j) in chart[j]:\n          add (A -> alpha B . beta, j) to chart[i]\n  accept if (S -> alpha ., 0) in chart[n]",
  invariant:"CYK requires CNF. Earley works on any CFG without transformation.",
  uses:"Natural language parsing, parsing complex grammars, teaching parsing.",
  strength:"General CFG. Earley handles left recursion directly.",
@@ -397,7 +409,7 @@ const RAW=[
  mental:"Small instructions, blocks connected by jumps",
  mentalText:"'x = a + b * c' becomes t1 = b * c; t2 = a + t1; x = t2. A basic block is a sequence with one entry and one exit. The CFG connects blocks that can follow each other.",
  steps:["Translate the AST to three-address code.","Group instructions into basic blocks.","Add edges between blocks for control flow.","Identify entry and exit blocks.","Run analyses on the CFG."],
- pseudo:"Three-address code:\n  x = y op z\n  x = op y\n  x = y\n  goto L\n  if x relop y goto L\n  param x ; call p, n ; return y\n  x = y[i] ; x[i] = y\n  x = &y ; x = *y ; *x = y\n\nBasic blocks:\n  a maximal sequence of instructions\n  no jumps in the middle\n  no jumps target the middle\n  entry: first instruction of the program\n  exit: last instruction or a jump\n\nCFG:\n  nodes = basic blocks\n  edge B1 -> B2 if the last instruction of B1 can jump to B2\n  entry node has no predecessors\n  exit node has no successors\n\nExample:\n  i = 0\n  L1: if i >= n goto L2\n      t = a[i]\n      s = s + t\n      i = i + 1\n      goto L1\n  L2: return s\n\n  Blocks: B1 (init), B2 (loop test), B3 (loop body), B4 (exit)\n  Edges: B1 -> B2, B2 -> B3, B2 -> B4, B3 -> B2",
+ pseudo:"Three-address code:\n  x = y op z\n  x = op y\n  x = y\n  goto L\n  if x relop y goto L\n  param x ; call p, n ; return y\n  x = y[i] ; x[i] = y\n\nBasic blocks:\n  a maximal sequence of instructions\n  no jumps in the middle\n  no jumps target the middle\n\nCFG:\n  nodes = basic blocks\n  edge B1 -> B2 if the last instruction of B1 can jump to B2",
  invariant:"Every instruction belongs to exactly one basic block. Control enters a block only at its first instruction and leaves only at its last.",
  uses:"Optimization, data-flow analysis, register allocation, instruction scheduling.",
  strength:"Simple IR. Easy to analyze. Standard in modern compilers.",
@@ -414,7 +426,7 @@ const RAW=[
  mental:"Each variable is assigned once; phi merges at joins",
  mentalText:"In SSA, x = 1 and x = 2 become x1 = 1 and x2 = 2. At a join, x3 = phi(x1, x2). Every use refers to exactly one definition.",
  steps:["Compute the dominator tree.","Insert phi nodes at join points (iterated dominance frontier).","Rename variables to make each definition unique.","Run optimizations.","Optionally convert out of SSA."],
- pseudo:"SSA construction:\n  1. Compute the dominance frontier DF(n) for each node n\n  2. For each variable v, place phi nodes at the iterated DF of the\n     blocks that define v\n  3. Rename: walk the dominator tree, maintaining a stack of\n     current definitions for each variable\n\nExample:\n  Original:\n    x = 0\n    if cond: x = 1\n    else: x = 2\n    y = x + 1\n\n  SSA:\n    x1 = 0\n    if cond: x2 = 1\n    else: x3 = 2\n    x4 = phi(x2, x3)\n    y1 = x4 + 1\n\nDominance frontier:\n  DF(n) = { m : n dominates a predecessor of m but n does not\n                 strictly dominate m }\n  DF of the if-then and if-else blocks contains the join block.\n\nIterated DF:\n  DF+(S) = closure of DF over S\n\nProperties:\n  each variable has one definition\n  def-use chains are explicit\n  many optimizations are simpler\n\nAlgorithms:\n  Cytron et al. (1991): efficient phi placement\n  Braun et al. (2013): simple and fast SSA construction",
+ pseudo:"SSA construction:\n  1. Compute the dominance frontier DF(n) for each node n\n  2. For each variable v, place phi nodes at the iterated DF of the\n     blocks that define v\n  3. Rename: walk the dominator tree, maintaining a stack of\n     current definitions for each variable\n\nExample:\n  Original:\n    x = 0\n    if cond: x = 1\n    else: x = 2\n    y = x + 1\n\n  SSA:\n    x1 = 0\n    if cond: x2 = 1\n    else: x3 = 2\n    x4 = phi(x2, x3)\n    y1 = x4 + 1",
  invariant:"Every use of a variable in SSA refers to exactly one definition, possibly a phi node.",
  uses:"LLVM, GCC, HotSpot, V8, modern compilers. SSA is the standard IR.",
  strength:"Simplifies optimization: constant propagation, dead-code elimination, GVN.",
@@ -422,7 +434,7 @@ const RAW=[
  pitfall:"Placing a phi node without considering the dominance frontier leaves some uses undefined. Always use the iterated DF.",
  question:"What does a phi node represent?",
  answer:"A merge of values from different control-flow paths. At a join, phi(x1, x2) selects x1 or x2 depending on which predecessor was taken.",
- demo:"ssa",sample:"x = 0\nif cond:\nx = 1\nelse:\nx = 2\ny = x + 1",refs:[
+ demo:"ssa",sample:"x = 1\ny = 2\nz = x + y\nx = 3\nw = x + z",refs:[
   ["Cytron et al., Efficiently computing static single assignment form and the control dependence graph, TOPLAS 1991","https://doi.org/10.1145/115372.115320"],
   ["Braun et al., Simple and efficient construction of static single assignment form, CC 2013","https://doi.org/10.1007/978-3-642-37051-9_6"],
   ["Cooper and Torczon, Engineering a Compiler, Ch. 9","https://www.elsevier.com/books/engineering-a-compiler/cooper/978-0-12-815991-0"]]},
@@ -431,7 +443,7 @@ const RAW=[
  mental:"d is on every path to n",
  mentalText:"The entry dominates every node. The immediate dominator idom(n) is the unique dominator closest to n. The dominator tree connects each node to its idom.",
  steps:["Compute the dominator sets by iteration or the Lengauer-Tarjan algorithm.","Build the dominator tree.","Compute the dominance frontier.","Use it for SSA, loop detection, and optimization."],
- pseudo:"Dominator definition:\n  d dom n iff every path from entry to n contains d\n  d strictly dominates n if d dom n and d != n\n  idom(n) = the unique dominator of n closest to n\n\nSimple iterative data-flow:\n  Dom(entry) = {entry}\n  Dom(n) = {n} union intersection over predecessors p of Dom(p)\n  iterate until a fixed point\n  time: O(n^2) worst case\n\nLengauer-Tarjan (1979):\n  O(m alpha(m, n)) nearly linear\n  uses semidominators and a union-find structure\n  semidominator sdom(n) = min over paths\n  idom from sdom via a union-find\n\nDominance frontier:\n  DF(n) = { m : n dominates a predecessor of m but n does not\n                 strictly dominate m }\n  used for phi placement in SSA\n\nDominator tree:\n  each node points to its idom\n  used for loop detection (back edges), SSA, and optimization",
+ pseudo:"Dominator definition:\n  d dom n iff every path from entry to n contains d\n  d strictly dominates n if d dom n and d != n\n  idom(n) = the unique dominator of n closest to n\n\nSimple iterative data-flow:\n  Dom(entry) = {entry}\n  Dom(n) = {n} union intersection over predecessors p of Dom(p)\n  iterate until a fixed point\n  time: O(n^2) worst case\n\nLengauer-Tarjan (1979):\n  O(m alpha(m, n)) nearly linear\n  uses semidominators and a union-find structure\n\nDominance frontier:\n  DF(n) = { m : n dominates a predecessor of m but n does not\n                 strictly dominate m }",
  invariant:"Every node except the entry has exactly one immediate dominator. The dominator relation is a tree.",
  uses:"SSA construction, loop detection, control dependence, optimization, verification.",
  strength:"Fundamental structure. Enables many analyses.",
@@ -449,7 +461,7 @@ const RAW=[
  mental:"Which assignments can reach this point?",
  mentalText:"At the entry to a block, the reaching definitions are the union of the definitions reaching the end of each predecessor. A definition kills previous definitions of the same variable.",
  steps:["Compute GEN and KILL sets for each basic block.","Initialize IN and OUT sets.","Iterate: IN[b] = union of OUT[p] over predecessors.","OUT[b] = GEN[b] union (IN[b] minus KILL[b]).","Repeat until a fixed point."],
- pseudo:"Reaching definitions (forward, may):\n  IN[b]  = union over predecessors p of OUT[p]\n  OUT[b] = GEN[b] union (IN[b] - KILL[b])\n\nGEN[b] = definitions in b that reach the end of b\nKILL[b] = definitions of variables defined in b, from other blocks\n\nExample:\n  B1: d1: x = 1\n      d2: y = 2\n      goto B3\n  B2: d3: x = 3\n      goto B3\n  B3: d4: z = x + y\n\n  GEN[B1] = {d1, d2}, KILL[B1] = {d3}\n  GEN[B2] = {d3}, KILL[B2] = {d1}\n  GEN[B3] = {d4}, KILL[B3] = {}\n\n  IN[B3] = OUT[B1] union OUT[B2]\n         = {d1, d2} union {d3}\n         = {d1, d2, d3}\n\nUses:\n  constant propagation\n  use-def chains\n  dead code elimination\n\nComplexity: O(n^2) or better with bit vectors.",
+ pseudo:"Reaching definitions (forward, may):\n  IN[b]  = union over predecessors p of OUT[p]\n  OUT[b] = GEN[b] union (IN[b] - KILL[b])\n\nGEN[b] = definitions in b that reach the end of b\nKILL[b] = definitions of variables defined in b, from other blocks",
  invariant:"Reaching definitions is a may-analysis: a definition may reach a point if there is any path. It is conservative.",
  uses:"Optimization (constant propagation, DCE), bug finding, program understanding.",
  strength:"Simple, general, well-understood.",
@@ -466,7 +478,7 @@ const RAW=[
  mental:"Will this value be used again before it is overwritten?",
  mentalText:"At a use, the variable is live. At a definition, the variable becomes dead unless it is live after. Liveness propagates backwards.",
  steps:["Compute USE and DEF sets for each basic block.","Initialize IN and OUT sets.","Iterate: OUT[b] = union of IN[s] over successors s.","IN[b] = USE[b] union (OUT[b] minus DEF[b]).","Repeat until a fixed point."],
- pseudo:"Liveness (backward, may):\n  OUT[b] = union over successors s of IN[s]\n  IN[b]  = USE[b] union (OUT[b] - DEF[b])\n\nUSE[b] = variables used in b before being defined\nDEF[b] = variables defined in b before being used\n\nExample:\n  B1: d1: x = 1\n      d2: y = 2\n      goto B3\n  B2: d3: x = 3\n      goto B3\n  B3: d4: z = x + y\n\n  USE[B3] = {x, y}, DEF[B3] = {z}\n  IN[B3] = {x, y}\n  OUT[B1] = IN[B3] = {x, y}\n  IN[B1] = USE[B1] union (OUT[B1] - DEF[B1])\n         = {} union ({x, y} - {x, y})\n         = {}\n\n  x is live at the start of B3 (used in z = x + y)\n  y is live at the start of B3\n\nUses:\n  register allocation\n  dead code elimination\n  loop-invariant code motion\n  SSA construction",
+ pseudo:"Liveness (backward, may):\n  OUT[b] = union over successors s of IN[s]\n  IN[b]  = USE[b] union (OUT[b] - DEF[b])\n\nUSE[b] = variables used in b before being defined\nDEF[b] = variables defined in b before being used",
  invariant:"Liveness is a may-analysis: a variable is live if there exists a path where it is used before being redefined.",
  uses:"Register allocation, optimization, debugging, verification.",
  strength:"Simple, backward, efficient with bit vectors.",
@@ -483,7 +495,7 @@ const RAW=[
  mental:"Track which variables have known constant values",
  mentalText:"A variable is constant at a point if all reaching definitions assign the same constant. Propagate forward. If a variable is never used, eliminate the definition.",
  steps:["Initialize the lattice: Top (unknown), constants, Bottom (not constant).","Iterate over the CFG.","At each definition, update the variable's value.","At each use, replace with the constant if known.","Eliminate unreachable code."],
- pseudo:"Constant propagation lattice:\n  UNDEF < constants < NAC (not a constant)\n\n  meet(x, y) = x if x == y\n             = NAC otherwise\n\nTransfer:\n  x = c          -> x is c\n  x = y + z      -> x is c1 + c2 if y and z are constants\n                    else NAC\n  x = unknown    -> NAC\n\nSCCP (Wegman and Zadeck 1991):\n  combines constant propagation with unreachable-code elimination\n  uses a worklist of (block, edge) pairs\n  only explores reachable blocks\n  more precise than simple constant propagation\n\nExample:\n  x = 1\n  if cond: x = 2\n  y = x + 1\n\n  Simple: x is NAC (meet of 1 and 2)\n  SCCP:   same, unless cond is constant\n\nExample with dead code:\n  x = 1\n  if false: x = 2\n  y = x + 1\n\n  x is 1 (the false branch is unreachable)\n  y = 2",
+ pseudo:"Constant propagation lattice:\n  UNDEF < constants < NAC (not a constant)\n\n  meet(x, y) = x if x == y\n             = NAC otherwise\n\nTransfer:\n  x = c          -> x is c\n  x = y + z      -> x is c1 + c2 if y and z are constants\n                    else NAC",
  invariant:"The lattice must be monotone. Meet of different constants is NAC (not a constant).",
  uses:"Optimization (constant folding, DCE), bug finding, verification.",
  strength:"Simple, effective. SCCP is more precise than simple propagation.",
@@ -500,7 +512,7 @@ const RAW=[
  mental:"Run the program on an approximation of the values",
  mentalText:"Instead of exact values, track an abstract property (signs, intervals, polyhedra). Every concrete behavior is included in the abstract result.",
  steps:["Choose the abstract domain.","Define the abstraction and concretization functions.","Define abstract transfer functions for each instruction.","Iterate to a fixed point.","Report the abstract result."],
- pseudo:"Abstract interpretation:\n  concrete domain: actual values\n  abstract domain: approximation (signs, intervals, ...)\n\n  abstraction: alpha: concrete -> abstract\n  concretization: gamma: abstract -> concrete\n\n  Galois connection: alpha(c) <= a iff c <= gamma(a)\n\n  soundness: for every concrete state c,\n             gamma(alpha(c)) contains c\n\nTransfer functions:\n  abstract transfer for each instruction\n  must be monotone and sound\n\nFixed point:\n  iterate until no change\n  use widening and narrowing for infinite domains\n\nDomains (from cheap to expensive):\n  signs: {-, 0, +, T}\n  intervals: [lo, hi]\n  octagons: +/- x +/- y <= c\n  polyhedra: linear inequalities\n  congruence: x mod n = c\n\nApplications:\n  static analysis (Astrée, Polyspace, Infer)\n  compiler optimization\n  verification\n\nTrade-off:\n  more precise domain = more expensive\n  widening = force termination\n  narrowing = recover precision",
+ pseudo:"Abstract interpretation:\n  concrete domain: actual values\n  abstract domain: approximation (signs, intervals, ...)\n\n  abstraction: alpha: concrete -> abstract\n  concretization: gamma: abstract -> concrete\n\n  Galois connection: alpha(c) <= a iff c <= gamma(a)\n\n  soundness: for every concrete state c,\n             gamma(alpha(c)) contains c\n\nDomains:\n  signs: {-, 0, +, T}\n  intervals: [lo, hi]\n  octagons: +/- x +/- y <= c\n  polyhedra: linear inequalities\n\nWidening = force termination\nNarrowing = recover precision",
  invariant:"Abstract interpretation must be sound: it over-approximates the concrete behavior. If it says a property holds, it does.",
  uses:"Static analysis, verification, compiler optimization, bug finding.",
  strength:"Sound. Handles infinite state spaces. Widely used in industry.",
@@ -518,7 +530,7 @@ const RAW=[
  mental:"Compute constants, remove useless code",
  mentalText:"'x = 2 + 3' becomes 'x = 5'. If x is never used, remove the assignment. Mark-and-sweep for dead code: start from observable effects, mark live instructions, remove the rest.",
  steps:["Constant fold: evaluate operations on constants.","Propagate constants.","DCE: mark instructions with observable effects (calls, returns, stores).","Propagate liveness backward.","Remove unmarked instructions."],
- pseudo:"Constant folding:\n  for each instruction:\n    if all operands are constants:\n      replace with the computed value\n\nConstant propagation:\n  replace uses of a variable with its constant value\n  requires reaching-definitions or SSA\n\nDead code elimination:\n  live instruction: has side effects (call, store, return, branch)\n  or its result is used by another live instruction\n  worklist algorithm:\n    mark all instructions with side effects\n    for each marked, mark its operands' definitions\n    remove unmarked instructions\n\nExample:\n  a = 1\n  b = 2\n  c = a + b    # c = 3\n  d = c * 2    # d = 6\n  return d     # return 6\n\n  After folding: a = 1; b = 2; c = 3; d = 6; return 6\n  After DCE:     return 6\n\nCooperating optimizations:\n  folding exposes dead code\n  DCE removes it\n  iterate to a fixed point",
+ pseudo:"Constant folding:\n  for each instruction:\n    if all operands are constants:\n      replace with the computed value\n\nDead code elimination:\n  live instruction: has side effects\n  or its result is used by another live instruction\n\nExample:\n  a = 1\n  b = 2\n  c = a + b    # c = 3\n  d = c * 2    # d = 6\n  return d     # return 6\n\n  After folding: return 6",
  invariant:"Constant folding must be sound: the folded value must equal the runtime value. Overflow and floating-point must be handled carefully.",
  uses:"Every optimizing compiler. Also in interpreters (peephole) and JITs.",
  strength:"Simple, fast, effective. Exposes more optimization opportunities.",
@@ -535,7 +547,7 @@ const RAW=[
  mental:"If you compute the same thing twice, compute once",
  mentalText:"'a = b + c; d = b + c' becomes 'a = b + c; d = a'. GVN assigns a value number to each expression and replaces equivalent expressions with the same value.",
  steps:["Assign value numbers to expressions.","Hash each expression by operator and operand value numbers.","If the hash exists, replace with the existing value.","Iterate to a fixed point.","Run DCE to clean up."],
- pseudo:"Local CSE:\n  for each basic block:\n    for each instruction:\n      key = (op, operand1_value, operand2_value)\n      if key in table:\n        replace with table[key]\n      else:\n        table[key] = result\n\nGlobal value numbering (GVN):\n  assign a value number to each expression\n  two expressions with the same value number compute the same value\n  uses SSA form and phi nodes\n  more powerful than local CSE\n\nExample:\n  t1 = b + c\n  t2 = b + c\n  d = t1 + t2\n\n  After CSE: t1 = b + c; t2 = t1; d = t1 + t1\n  After DCE: t1 = b + c; d = 2 * t1 (with strength reduction)\n\nCSE and GVN are subsumed by:\n  hash-based global value numbering\n  partial redundancy elimination (PRE)\n  lazy code motion (LCM)\n\nPRE:\n  places the computation at a point that is optimal\n  eliminates redundant computations on some paths\n  LCM is a practical PRE algorithm",
+ pseudo:"Local CSE:\n  for each basic block:\n    for each instruction:\n      key = (op, operand1_value, operand2_value)\n      if key in table:\n        replace with table[key]\n      else:\n        table[key] = result\n\nGVN uses SSA form and phi nodes, more powerful than local CSE.",
  invariant:"CSE is sound only if the operands have the same value and no side effects between the two computations. Loads from memory may not be redundant.",
  uses:"Every optimizing compiler. GVN is a standard LLVM pass.",
  strength:"Powerful, reduces code size and runtime. GVN is precise.",
@@ -552,15 +564,15 @@ const RAW=[
  mental:"Hoist invariants out of loops; expand calls in place",
  mentalText:"If 'x = a * b' inside a loop does not depend on the loop variable, compute it once before the loop. If a call is small, inline it to expose more optimization.",
  steps:["LICM: identify loop-invariant computations.","LICM: ensure the loop is executed at least once or the computation is safe to hoist.","LICM: move the computation to the preheader.","Inlining: replace the call with the callee's body.","Inlining: substitute arguments for parameters and rename variables."],
- pseudo:"LICM:\n  for each loop L:\n    for each instruction i in L:\n      if all operands of i are defined outside L\n         and i has no side effects\n         and i dominates all loop exits (or the loop is executed at least once):\n        move i to the preheader of L\n\nExample:\n  for i in 1..n:\n    x = a * b\n    s = s + x\n\n  After LICM:\n  x = a * b\n  for i in 1..n:\n    s = s + x\n\nInlining:\n  replace call f(args) with:\n    substitute args for parameters\n    rename locals to avoid clashes\n    inline the body\n\nExample:\n  def square(x): return x * x\n  y = square(3 + 4)\n\n  After inlining:\n  t = 3 + 4\n  y = t * t\n\n  After constant folding: y = 49\n\nInlining heuristics:\n  function size, call site frequency, recursion\n  too much inlining = code bloat\n  too little = lost optimization opportunities",
+ pseudo:"LICM:\n  for each loop L:\n    for each instruction i in L:\n      if all operands of i are defined outside L\n         and i has no side effects\n         and i dominates all loop exits:\n        move i to the preheader of L\n\nExample:\n  for i in 1..n:\n    x = a * b\n    s = s + x\n\n  After LICM:\n  x = a * b\n  for i in 1..n:\n    s = s + x",
  invariant:"LICM requires the loop to be executed at least once, or the computation to be safe to execute speculatively. Inlining must preserve semantics.",
  uses:"Every optimizing compiler. LICM is a standard LLVM pass.",
  strength:"LICM removes redundant work. Inlining exposes cross-function optimization.",
  limits:"LICM can increase register pressure. Inlining can bloat code.",
  pitfall:"Hoisting a computation that may throw or divide by zero changes semantics. Only hoist safe instructions.",
  question:"Why does LICM require the loop to be executed at least once?",
- answer:"If the loop body never runs, hoisting a computation that may have side effects or may trap would execute code that the original program would not. The hoisted code must be safe to execute.",
- demo:"licm",sample:"for i in 1..n:\nx = a * b\ns = s + x",refs:[
+ answer:"If the loop body never runs, hoisting a computation that may have side effects or may trap would execute code that the original program would not.",
+ demo:"licm",sample:"x = a * b\ns = s + x\nt = a + b\ns = s + t",refs:[
   ["Aho et al., Compilers: Principles, Techniques, and Tools, Ch. 9, 10","https://www.pearson.com/en-us/subject-catalog/p/compilers-principles-techniques-and-tools/P200000003409"],
   ["Muchnick, Advanced Compiler Design and Implementation, Ch. 13-14","https://www.elsevier.com/books/advanced-compiler-design-and-implementation/muchnick/978-1-55860-320-2"],
   ["Cooper and Torczon, Engineering a Compiler, Ch. 10","https://www.elsevier.com/books/engineering-a-compiler/cooper/978-0-12-815991-0"]]},
@@ -570,7 +582,7 @@ const RAW=[
  mental:"Replace i*k with a running sum",
  mentalText:"In a loop, 't = i * k' can be replaced by 't = t + k' initialized before the loop. This turns a multiplication into an addition.",
  steps:["Identify induction variables (i increases by a constant each iteration).","Identify expressions that are linear in the induction variable.","Replace with a new variable updated by addition.","Remove the old computations if they become dead."],
- pseudo:"Strength reduction:\n  for i in 1..n:\n    t = i * k\n    use(t)\n\n  becomes:\n  t = k\n  for i in 1..n:\n    use(t)\n    t = t + k\n\nInduction variable elimination:\n  for i in 1..n:\n    a[i] = 0\n\n  may use a pointer that advances by the element size\n\nExample: array indexing\n  for i in 1..n:\n    a[i] = 0\n\n  becomes:\n  p = &a[0]\n  for i in 1..n:\n    *p = 0\n    p = p + sizeof(int)\n\nVectorization:\n  for i in 1..n:\n    c[i] = a[i] + b[i]\n\n  becomes SIMD:\n  for i in 1..n step 4:\n    c[i..i+3] = a[i..i+3] + b[i..i+3]\n\nDependence analysis:\n  no loop-carried dependence = vectorizable\n  loop-carried dependence = not directly vectorizable",
+ pseudo:"Strength reduction:\n  for i in 1..n:\n    t = i * k\n    use(t)\n\n  becomes:\n  t = k\n  for i in 1..n:\n    use(t)\n    t = t + k\n\nVectorization:\n  for i in 1..n:\n    c[i] = a[i] + b[i]\n\n  becomes SIMD:\n  for i in 1..n step 4:\n    c[i..i+3] = a[i..i+3] + b[i..i+3]\n\nDependence analysis:\n  no loop-carried dependence = vectorizable",
  invariant:"Strength reduction is valid only if the induction variable and the expression are truly linear. Dependence analysis is required for vectorization.",
  uses:"Every optimizing compiler. Vectorization is essential for numerical code.",
  strength:"Reduces expensive operations to cheap ones. Enables vectorization.",
@@ -578,7 +590,7 @@ const RAW=[
  pitfall:"Vectorizing a loop with a loop-carried dependence gives wrong results. Always check dependences.",
  question:"What is a loop-carried dependence?",
  answer:"A dependence between two iterations of a loop, e.g. a[i] depends on a[i-1]. It prevents vectorization because the iterations cannot be reordered.",
- demo:"strength",sample:"for i in 1..n:\nt = i * 4\ns = s + t",refs:[
+ demo:"strength",sample:"t = i * 4\ns = s + t",refs:[
   ["Aho et al., Compilers: Principles, Techniques, and Tools, Ch. 10, 11","https://www.pearson.com/en-us/subject-catalog/p/compilers-principles-techniques-and-tools/P200000003409"],
   ["Muchnick, Advanced Compiler Design and Implementation, Ch. 14","https://www.elsevier.com/books/advanced-compiler-design-and-implementation/muchnick/978-1-55860-320-2"],
   ["Allen and Kennedy, Optimizing Compilers for Modern Architectures, Morgan Kaufmann 2002","https://www.elsevier.com/books/optimizing-compilers-for-modern-architectures/allen/978-1-55860-286-1"]]},
@@ -587,7 +599,7 @@ const RAW=[
  mental:"Can these two pointers point to the same thing? Can this object escape?",
  mentalText:"If p and q are must-not-alias, an optimization that reorders them is safe. If an object does not escape, it can be allocated on the stack or its fields can be kept in registers.",
  steps:["Build a points-to graph or use a type-based analysis.","Classify each pair of pointers as may-alias, must-alias, or no-alias.","For escape analysis, check whether the object can be stored in a heap or passed to a call.","Use the results to optimize."],
- pseudo:"Alias analysis:\n  may-alias(p, q): p and q may refer to the same location\n  must-alias(p, q): p and q always refer to the same location\n  no-alias(p, q): p and q never refer to the same location\n\n  Andersen's analysis (inclusion-based):\n    points-to sets\n    O(n^3) worst case\n\n  Steensgaard's analysis (unification-based):\n    union-find, near-linear\n    less precise\n\n  Flow-sensitive vs flow-insensitive\n\nEscape analysis:\n  does object o escape its scope?\n  escapes if:\n    stored in a global or heap\n    returned from the function\n    passed to a function that may store it\n    assigned to a field of an escaping object\n\n  if not escaping:\n    allocate on the stack\n    scalar replacement\n    eliminate synchronization\n\nExample:\n  def f():\n    p = new Point(1, 2)\n    return p.x + p.y\n\n  p does not escape\n  scalar replacement: p.x = 1; p.y = 2; return 1 + 2\n\nApplications:\n  optimization (CSE, LICM, DCE)\n  stack allocation\n  synchronization elimination\n  garbage collection\n  bug finding",
+ pseudo:"Alias analysis:\n  may-alias(p, q): p and q may refer to the same location\n  must-alias(p, q): p and q always refer to the same location\n  no-alias(p, q): p and q never refer to the same location\n\nEscape analysis:\n  escapes if:\n    stored in a global or heap\n    returned from the function\n    passed to a function that may store it",
  invariant:"Alias analysis is undecidable in general. All practical analyses are conservative (may-alias).",
  uses:"Optimization, memory management, concurrency, garbage collection, bug finding.",
  strength:"Enables powerful optimizations. Escape analysis is the basis for stack allocation.",
@@ -605,7 +617,7 @@ const RAW=[
  mental:"Match IR trees against instruction patterns",
  mentalText:"Each machine instruction is a pattern. The selector finds a covering of the IR tree with the cheapest patterns. Tree tiling is the standard formulation.",
  steps:["Define the instruction patterns and their costs.","Build the IR tree.","Find a minimal-cost covering.","Emit the selected instructions."],
- pseudo:"Tree tiling:\n  IR tree nodes = operations\n  instruction patterns = tree fragments\n  cost = size, cycles, or a combination\n  find the minimal-cost covering\n\nDynamic programming:\n  for each node n:\n    cost[n] = min over patterns p matching n of\n              cost(p) + sum over children of cost[child]\n\nExample:\n  IR: t1 = a + b\n      t2 = t1 * c\n\n  Instructions:\n    ADD r, a, b   (1 cycle)\n    MUL r, t, c   (3 cycles)\n\n  Covering: ADD then MUL (4 cycles)\n\n  Alternative (fused):\n    MUL_ADD r, c, (a+b)   (3 cycles)\n  Cheaper if the target has a fused multiply-add.\n\nCISC vs RISC:\n  CISC: complex instructions, more patterns\n  RISC: simple instructions, easier selection\n\nBURS (Bottom-Up Rewrite System):\n  automates instruction selection from a grammar\n  used in GCC, LLVM (to some extent)",
+ pseudo:"Tree tiling:\n  IR tree nodes = operations\n  instruction patterns = tree fragments\n  cost = size, cycles, or a combination\n\nDynamic programming:\n  for each node n:\n    cost[n] = min over patterns p matching n of\n              cost(p) + sum over children of cost[child]",
  invariant:"The selected instructions must compute the same result as the IR. Costs must reflect the target machine.",
  uses:"Every compiler backend. Fused multiply-add, SIMD, and GPU kernels are common.",
  strength:"Significant performance improvements from good instruction selection.",
@@ -622,7 +634,7 @@ const RAW=[
  mental:"Color the interference graph with K registers",
  mentalText:"Two variables interfere if they are live at the same time. Build the interference graph, color it, and spill if necessary.",
  steps:["Compute liveness.","Build the interference graph.","Simplify: remove nodes with degree < K.","Color: assign colors in reverse order.","Spill: if coloring fails, spill a variable to memory."],
- pseudo:"Graph coloring:\n  K = number of registers\n\n  build: nodes = variables, edges = interference\n  simplify: repeatedly remove nodes with degree < K\n  if all nodes removed: color in reverse order\n  if stuck (all nodes have degree >= K): spill a node\n\nChaitin-Briggs:\n  simplify, coalesce, freeze, select, spill\n  coalescing merges non-interfering move-related nodes\n\nLinear scan:\n  sort intervals by start\n  maintain active intervals\n  when a new interval starts:\n    expire old intervals (free registers)\n    if no free register: spill the interval with the furthest end\n  fast (O(n log n)) but less optimal than graph coloring\n\nExample:\n  variables a, b, c, d\n  live ranges:\n    a: [1, 5]\n    b: [2, 4]\n    c: [3, 8]\n    d: [6, 9]\n  interference:\n    a-b, a-c, b-c, c-d\n  with 3 registers:\n    a=R1, b=R2, c=R3, d=R1\n\nSpilling:\n  if a variable is spilled, it is stored in memory\n  insert load/store around uses\n  re-run allocation\n  iterate until success",
+ pseudo:"Graph coloring:\n  K = number of registers\n  build: nodes = variables, edges = interference\n  simplify: repeatedly remove nodes with degree < K\n  if all nodes removed: color in reverse order\n  if stuck (all nodes have degree >= K): spill a node\n\nLinear scan:\n  sort intervals by start\n  maintain active intervals\n  when a new interval starts:\n    expire old intervals (free registers)\n    if no free register: spill the interval with the furthest end\n  fast (O(n log n)) but less optimal than graph coloring",
  invariant:"Two variables that are live at the same point must not share a register.",
  uses:"Every compiler backend. Modern JITs use linear scan for speed.",
  strength:"Optimal for chordal graphs (which interference graphs often are). Well-understood.",
@@ -639,7 +651,7 @@ const RAW=[
  mental:"Improve small windows of code; reorder for the pipeline",
  mentalText:"A peephole replaces 'load r, x; load r, x' with 'load r, x'. Scheduling moves an independent load earlier to hide its latency.",
  steps:["Peephole: scan a sliding window of instructions.","Replace each window with the cheapest equivalent.","Scheduling: build a dependence graph.","Schedule instructions with a list scheduler.","Respect latencies and register pressure."],
- pseudo:"Peephole examples:\n  load r, x ; load r, x      -> load r, x\n  mul r, 2                   -> add r, r\n  add r, 0                   -> (delete)\n  jump L ; L:                -> L:\n  mov r, r                   -> (delete)\n\nInstruction scheduling:\n  dependence graph: nodes = instructions\n                    edges = data dependences (latency)\n                    edges = anti-dependences (register reuse)\n                    edges = control dependences\n  list scheduling:\n    ready = instructions with all predecessors scheduled\n    pick the one with highest priority (critical path)\n    schedule it at the earliest free cycle\n\n  Example (2-cycle multiply, 1-cycle add):\n    original:  MUL t, a, b\n               ADD s, t, c\n    schedule:  MUL t, a, b\n               (other independent work)\n               ADD s, t, c\n\n  Loop scheduling:\n    software pipelining\n    modulo scheduling\n    overlaps iterations to hide latency\n\nRegister pressure:\n  scheduling may increase live ranges\n  balance latency hiding with register pressure",
+ pseudo:"Peephole examples:\n  load r, x ; load r, x      -> load r, x\n  mul r, 2                   -> add r, r\n  add r, 0                   -> (delete)\n  jump L ; L:                -> L:\n  mov r, r                   -> (delete)",
  invariant:"Scheduling must preserve data dependences and control dependences.",
  uses:"Every optimizing compiler backend. Peephole is used in JITs.",
  strength:"Improves performance with local changes.",
@@ -647,7 +659,7 @@ const RAW=[
  pitfall:"Reordering across a branch changes semantics if the reordered instruction can trap or has side effects.",
  question:"What is the critical path in instruction scheduling?",
  answer:"The longest chain of dependent instructions. Scheduling along the critical path first minimizes the overall schedule length.",
- demo:"peephole",sample:"load r1, x\nload r1, x\nmul r2, 2\nadd r3, 0\njump L\nL: return r1",refs:[
+ demo:"peephole",sample:"load r1, x\nload r1, x\nmul r2, 2\nadd r3, 0\nmov r4, r4",refs:[
   ["Aho et al., Compilers: Principles, Techniques, and Tools, Ch. 11","https://www.pearson.com/en-us/subject-catalog/p/compilers-principles-techniques-and-tools/P200000003409"],
   ["Muchnick, Advanced Compiler Design and Implementation, Ch. 16-17","https://www.elsevier.com/books/advanced-compiler-design-and-implementation/muchnick/978-1-55860-320-2"],
   ["Cooper and Torczon, Engineering a Compiler, Ch. 12","https://www.elsevier.com/books/engineering-a-compiler/cooper/978-0-12-815991-0"]]},
@@ -657,7 +669,7 @@ const RAW=[
  mental:"Mark untrusted data, follow it to dangerous places",
  mentalText:"Mark input from the user as tainted. Propagate taint through assignments, function calls, and operations. Report if tainted data reaches a sink (SQL query, shell command, HTML output).",
  steps:["Identify sources (input, network, files).","Identify sinks (queries, commands, output).","Mark source values as tainted.","Propagate taint through the program.","Report sinks reached by tainted data."],
- pseudo:"Taint analysis:\n  source: value from user input, network, file\n  sink: SQL query, shell command, HTML output\n  sanitizer: function that removes taint\n\n  taint(x) = true if x is tainted\n  taint(f(x)) = taint(x) if f is not a sanitizer\n  taint(sanitize(x)) = false\n\nExample:\n  name = read_input()          # name is tainted\n  query = \"SELECT * FROM users WHERE name = '\" + name + \"'\"\n  execute(query)               # SINK: tainted data reaches query\n\n  after sanitize:\n  name = sanitize(read_input())  # name is clean\n  execute(\"...\" + name + \"'\")   # no taint\n\nTypes:\n  static taint analysis (compile time)\n  dynamic taint analysis (runtime, tracks actual data)\n\nStatic analysis:\n  data-flow analysis on the taint domain\n  flow-sensitive and context-sensitive\n  may-taint (conservative)\n\nDynamic analysis:\n  tracks taint at runtime\n  precise but slower\n  used in Dytan, libdft, PANDA",
+ pseudo:"Taint analysis:\n  source: value from user input, network, file\n  sink: SQL query, shell command, HTML output\n  sanitizer: function that removes taint\n\n  taint(x) = true if x is tainted\n  taint(f(x)) = taint(x) if f is not a sanitizer\n  taint(sanitize(x)) = false\n\nTypes:\n  static taint analysis (compile time)\n  dynamic taint analysis (runtime, tracks actual data)",
  invariant:"A taint analysis is sound if it reports all possible flows. It may have false positives (over-tainting) or false negatives (under-tainting).",
  uses:"Security: SQL injection, XSS, command injection, path traversal.",
  strength:"Catches injection vulnerabilities. Well-understood.",
@@ -674,7 +686,7 @@ const RAW=[
  mental:"Run the program with symbols, collect constraints, solve",
  mentalText:"Instead of concrete values, use symbols x, y. At a branch, fork the path and add the branch condition to the path condition. At the end, use an SMT solver to find inputs that satisfy the path condition.",
  steps:["Mark inputs as symbolic.","Execute the program symbolically.","At each branch, fork and update path conditions.","At the end, solve the path condition with an SMT solver.","Report concrete inputs and the path."],
- pseudo:"Symbolic execution:\n  state = (path_condition, symbolic_store, program_counter)\n  symbolic inputs: symbols instead of values\n\n  at each assignment:\n    update the symbolic store\n  at each branch:\n    fork the state\n    add the branch condition to path_condition\n\n  at the end:\n    path_condition is a formula over the inputs\n    solve with an SMT solver\n\nExample:\n  x = symbolic_input()\n  y = symbolic_input()\n  if x > 0:\n    if y == x * 2:\n      assert(y > 0)\n\n  Path 1: x > 0 and y == 2x\n    check y > 0: 2x > 0 since x > 0. Assertion holds.\n  Path 2: x > 0 and y != 2x\n    assertion not reached\n  Path 3: x <= 0\n    assertion not reached\n\nSMT solvers:\n  Z3, CVC5, Boolector, MathSAT\n  decide formulas over integers, reals, bit-vectors, arrays\n\nApplications:\n  test input generation\n  bug finding\n  verification\n  exploit generation\n\nTools:\n  KLEE, S2E, angr, Manticore, Triton, SymCC",
+ pseudo:"Symbolic execution:\n  state = (path_condition, symbolic_store, program_counter)\n  at each branch:\n    fork the state\n    add the branch condition to path_condition\n  at the end:\n    path_condition is a formula over the inputs\n    solve with an SMT solver\n\nSMT solvers:\n  Z3, CVC5, Boolector, MathSAT\n\nTools:\n  KLEE, S2E, angr, Manticore, Triton, SymCC",
  invariant:"Symbolic execution explores all paths. The number of paths can be exponential. Path explosion is the main challenge.",
  uses:"Test generation, bug finding, verification, reverse engineering, exploit development.",
  strength:"Explores all paths. Finds bugs that testing misses.",
@@ -691,7 +703,7 @@ const RAW=[
  mental:"Throw inputs at the program, keep the ones that explore new paths",
  mentalText:"A fuzzer generates inputs, runs the program, and observes coverage. Inputs that reach new code are kept and mutated further. This is coverage-guided fuzzing.",
  steps:["Start with a corpus of inputs.","Mutate an input.","Run the program and record coverage.","If new coverage, add to the corpus.","Repeat.","When a crash occurs, minimize the input and report."],
- pseudo:"Coverage-guided fuzzing (AFL-style):\n  corpus = initial inputs\n  while not done:\n    input = mutate(random choice from corpus)\n    coverage = run(input)\n    if coverage is new:\n      corpus.add(input)\n    if crash:\n      report(minimize(input))\n\nMutation strategies:\n  bit flips, byte flips, arithmetic, insert/delete, splice\n  dictionary-based (keywords, magic values)\n\nCoverage:\n  edge coverage (AFL)\n  path coverage\n  value profile (AFL++)\n\nSanitizers:\n  ASan (address), MSan (memory), UBSan (undefined behavior)\n  crash on the first bug\n\nFuzzing vs static analysis:\n  fuzzing: dynamic, finds real bugs, needs a seed corpus\n  static: finds bugs without running, may have false positives\n\nHybrid:\n  concolic testing (concrete + symbolic)\n  libFuzzer, AFL++, Honggfuzz, OSS-Fuzz",
+ pseudo:"Coverage-guided fuzzing (AFL-style):\n  corpus = initial inputs\n  while not done:\n    input = mutate(random choice from corpus)\n    coverage = run(input)\n    if coverage is new:\n      corpus.add(input)\n    if crash:\n      report(minimize(input))",
  invariant:"Fuzzing finds crashes, not all bugs. Coverage is a proxy for thoroughness. Sanitizers turn silent bugs into crashes.",
  uses:"Security testing, quality assurance, bug finding, protocol testing.",
  strength:"Finds real bugs. Coverage-guided fuzzing is very effective.",
@@ -709,7 +721,7 @@ const RAW=[
  mental:"Precondition, program, postcondition",
  mentalText:"{x = 0} x := x + 1 {x = 1}. The rule for assignment: {P[x := e]} x := e {P}. For sequences, compose. For loops, find an invariant.",
  steps:["Write the precondition and postcondition.","Apply the Hoare rules to generate proof obligations.","For loops, find an invariant that holds before and after each iteration.","Discharge the obligations with an SMT solver or a proof assistant."],
- pseudo:"Hoare triple: {P} C {Q}\n\nAssignment:\n  {P[x := e]} x := e {P}\n\nSequence:\n  {P} C1 {R}   {R} C2 {Q}\n  ---------------------------\n         {P} C1; C2 {Q}\n\nIf:\n  {P and B} C1 {Q}   {P and not B} C2 {Q}\n  --------------------------------------\n           {P} if B then C1 else C2 {Q}\n\nWhile:\n  {I and B} C {I}\n  ------------------------\n  {I} while B do C {I and not B}\n\n  I is the loop invariant\n\nConsequence:\n  P -> P'   {P'} C {Q'}   Q' -> Q\n  ---------------------------------\n            {P} C {Q}\n\nExample: sum of 1..n\n  {n >= 0 and s = 0 and i = 0}\n  while i < n do\n    i := i + 1\n    s := s + i\n  {s = n(n+1)/2}\n\n  invariant I: s = i(i+1)/2\n\n  proof obligations:\n    init: n >= 0 and s = 0 and i = 0 -> I\n    preserve: I and i < n -> I[i := i+1, s := s+i+1]\n    exit: I and i >= n -> s = n(n+1)/2\n\nTools:\n  Dafny, Why3, Frama-C, VeriFast, Coq, Isabelle, Lean",
+ pseudo:"Hoare triple: {P} C {Q}\n\nAssignment:\n  {P[x := e]} x := e {P}\n\nSequence:\n  {P} C1 {R}   {R} C2 {Q}\n  ---------------------------\n         {P} C1; C2 {Q}\n\nWhile:\n  {I and B} C {I}\n  ------------------------\n  {I} while B do C {I and not B}\n\n  I is the loop invariant\n\nTools:\n  Dafny, Why3, Frama-C, VeriFast, Coq, Isabelle, Lean",
  invariant:"The loop invariant must hold before the loop and be preserved by each iteration. It must imply the postcondition on exit.",
  uses:"Verification of critical software: operating systems, compilers, crypto, aerospace.",
  strength:"Sound: a verified program satisfies its specification. Modular.",
@@ -717,7 +729,7 @@ const RAW=[
  pitfall:"A too-weak invariant does not imply the postcondition. A too-strong invariant is not preserved.",
  question:"What is a loop invariant?",
  answer:"A property that holds before the loop and after each iteration. It is the key to verifying loops.",
- demo:"hoare",sample:"n >= 0 and s = 0 and i = 0\nwhile i < n:\ni = i + 1\ns = s + i\ns = n*(n+1)/2",refs:[
+ demo:"hoare",sample:"n >= 0 and s = 0 and i = 0\ns = i*(i+1)/2\ni = i + 1\ns = s + i\ns = n*(n+1)/2",refs:[
   ["Hoare, An axiomatic basis for computer programming, CACM 1969","https://doi.org/10.1145/363235.363259"],
   ["Dijkstra, A Discipline of Programming, Prentice Hall 1976","https://www.pearson.com/en-us/subject-catalog/p/a-discipline-of-programming/P200000003409"],
   ["Nipkow, Klein, Concrete Semantics, Springer 2014","https://link.springer.com/book/10.1007/978-3-319-10542-0"]]},
@@ -726,7 +738,7 @@ const RAW=[
  mental:"Explore all states, check the property",
  mentalText:"Build a finite-state model. Express the property in LTL or CTL. Explore the state space. If a state violates the property, report a counterexample trace.",
  steps:["Model the system as a finite-state transition system.","Specify the property in temporal logic.","Explore the state space (explicit or symbolic).","Report success or a counterexample."],
- pseudo:"Temporal logic (LTL):\n  X p: p holds in the next state\n  F p: p holds eventually\n  G p: p holds always\n  p U q: p holds until q\n\nTemporal logic (CTL):\n  EX, AX, EF, AF, EG, AG, EU, AU\n\nModel checking:\n  explicit: BFS/DFS over the state space\n  symbolic: BDD or SAT over the transition relation\n  bounded: unroll k steps, reduce to SAT (BMC)\n\nExample: mutual exclusion\n  property: G (not (crit1 and crit2))\n  if violated, a counterexample trace shows both in the critical section\n\nTools:\n  SPIN, NuSMV, nusmv, TLA+, UPPAAL, PRISM\n\nState explosion:\n  the number of states grows exponentially\n  symbolic methods mitigate but do not eliminate\n\nAbstraction:\n  predicate abstraction\n  CEGAR (counterexample-guided abstraction refinement)",
+ pseudo:"Temporal logic (LTL):\n  X p: p holds in the next state\n  F p: p holds eventually\n  G p: p holds always\n  p U q: p holds until q\n\nModel checking:\n  explicit: BFS/DFS over the state space\n  symbolic: BDD or SAT over the transition relation\n  bounded: unroll k steps, reduce to SAT (BMC)",
  invariant:"Model checking is exact for the finite model. If the model is wrong, the verification is meaningless.",
  uses:"Hardware verification, protocol verification, concurrent software, cyber-physical systems.",
  strength:"Exact. Produces counterexamples. Automatic.",
@@ -743,7 +755,7 @@ const RAW=[
  mental:"Compile hot code, collect garbage, fall back when wrong",
  mentalText:"The interpreter profiles the program. Hot loops and functions are JIT-compiled with speculative optimizations. If a speculation fails, the JIT deoptimizes back to the interpreter.",
  steps:["Interpret the program and profile it.","Identify hot code.","JIT-compile with speculative optimizations.","If a speculation fails, deoptimize.","Garbage collection reclaims unreachable objects."],
- pseudo:"JIT compilation:\n  1. Interpret and profile (counters, type feedback)\n  2. When a method is hot, compile it\n  3. Apply speculative optimizations:\n       inline caches, type specialization, escape analysis\n  4. Install the compiled code\n\nDeoptimization:\n  if a speculation fails (e.g. wrong type):\n    reconstruct the interpreter state\n    resume interpretation\n  the JIT code is discarded\n\nTiered compilation:\n  tier 0: interpreter\n  tier 1: baseline JIT\n  tier 2: optimizing JIT\n  promote based on profile\n\nGarbage collection:\n  reference counting\n  mark and sweep\n  copying (semi-space)\n  generational (young/old)\n  concurrent (CMS, G1, ZGC, Shenandoah)\n  real-time (Metronome)\n\nGC metrics:\n  throughput, pause time, memory footprint\n  no collector optimizes all three (the GC trilemma)\n\nDeoptimization points:\n  branch on a failed assumption\n  the compiler emits a check and a fallback path",
+ pseudo:"JIT compilation:\n  1. Interpret and profile\n  2. When a method is hot, compile it\n  3. Apply speculative optimizations\n  4. Install the compiled code\n\nDeoptimization:\n  if a speculation fails:\n    reconstruct the interpreter state\n    resume interpretation\n\nGarbage collection:\n  reference counting, mark and sweep, copying,\n  generational, concurrent, real-time\n\nGC trilemma: throughput, pause time, footprint",
  invariant:"Speculative optimizations must be correct under their assumptions. Deoptimization restores the interpreter state exactly.",
  uses:"Java (HotSpot), JavaScript (V8, SpiderMonkey), Python (PyPy), .NET (CoreCLR), LuaJIT.",
  strength:"Combines interpretation flexibility with compiled performance.",
@@ -759,9 +771,10 @@ const RAW=[
 
 const LESSONS=RAW.map(mk);
 const byId=Object.fromEntries(LESSONS.map(x=>[x.id,x]));
-
+</script>
+<script>
 /* ============================================================
-   Code examples (Python)
+   Reference code examples (Python)
    ============================================================ */
 const CODE={
  "lexer":{python:`import re
@@ -781,7 +794,7 @@ def tokenize(code):
     for m in tok_re.finditer(code):
         kind = m.lastgroup
         value = m.group()
-        if kind == "SKIP" or kind == "COMMENT":
+        if kind in ("SKIP", "COMMENT"):
             continue
         if kind == "MISMATCH":
             raise SyntaxError(f"Unexpected {value!r}")
@@ -795,8 +808,8 @@ for t in tokenize("x = 1 + 2 * (y - 3)  # comment"):
 
 class NFA:
     def __init__(self):
-        self.transitions = {}  # (state, symbol) -> set of states
-        self.epsilon = {}      # state -> set of states
+        self.transitions = {}
+        self.epsilon = {}
         self.start = 0
         self.accept = 1
         self.next_state = 2
@@ -811,8 +824,6 @@ class NFA:
 
 def build_nfa(regex):
     nfa = NFA()
-    # Very simplified: handle literal and concatenation only
-    # Full Thompson handles |, *, +, ?, ()
     states = [nfa.start]
     for ch in regex:
         new_state = nfa.new_state()
@@ -855,12 +866,11 @@ def subset_construction(nfa_transitions, nfa_epsilon, start, accept, alphabet):
     dfa_accept = {dfa_states[S] for S in dfa_states if accept in S}
     return dfa_states, dfa_transitions, dfa_accept
 `},
- "recursive-descent":{python:`# Recursive descent parser for expression grammar
-# E -> T E'
+ "recursive-descent":{python:`# E  -> T E'
 # E' -> + T E' | epsilon
-# T -> F T'
+# T  -> F T'
 # T' -> * F T' | epsilon
-# F -> ( E ) | id
+# F  -> ( E ) | id
 
 class Parser:
     def __init__(self, tokens):
@@ -902,16 +912,14 @@ class Parser:
         if tok[0] == "OP" and tok[1] == "(":
             self.consume()
             e = self.E()
-            self.consume("OP")  # )
+            self.consume("OP")
             return e
         raise SyntaxError(f"Unexpected {tok}")
 
 tokens = [("ID","x"),("OP","+"),("ID","y"),("OP","*"),("ID","z")]
 print(Parser(tokens).parse())
 `},
- "pratt":{python:`# Pratt parser for arithmetic expressions
-
-def tokenize(s):
+ "pratt":{python:`def tokenize(s):
     import re
     return re.findall(r"\\d+|[+\\-*/()]", s)
 
@@ -926,7 +934,7 @@ def parse(s):
         tok = consume()
         if tok == '(':
             left = parse_expr(0)
-            consume()  # )
+            consume()
         elif tok.isdigit():
             left = int(tok)
         elif tok == '-':
@@ -947,9 +955,7 @@ def parse(s):
 for s in ["1 + 2 * 3", "1 * 2 + 3", "1 + 2 - 3", "2 * (3 + 4)"]:
     print(s, "->", parse(s))
 `},
- "ast":{python:`# AST for a small expression language
-
-class Node: pass
+ "ast":{python:`class Node: pass
 
 class Num(Node):
     def __init__(self, value): self.value = value
@@ -965,11 +971,9 @@ class Assign(Node):
         self.name = name; self.value = value
     def __repr__(self): return f"Assign({self.name}, {self.value})"
 
-# Parse "x = 1 + 2 * 3"
 ast = Assign("x", BinOp("+", Num(1), BinOp("*", Num(2), Num(3))))
 print(ast)
 
-# Evaluate
 def eval_ast(node):
     if isinstance(node, Num): return node.value
     if isinstance(node, BinOp):
@@ -979,9 +983,7 @@ def eval_ast(node):
 
 print("Value:", eval_ast(ast.value))
 `},
- "type-check":{python:`# Simple type checker for arithmetic expressions
-
-def type_of(expr, env):
+ "type-check":{python:`def type_of(expr, env):
     if isinstance(expr, int):
         return "int"
     if isinstance(expr, float):
@@ -1010,9 +1012,7 @@ try:
 except TypeError as e:
     print("Error:", e)
 `},
- "hm":{python:`# Hindley-Milner type inference with unification
-
-class TVar:
+ "hm":{python:`class TVar:
     _counter = 0
     def __init__(self):
         self.id = TVar._counter; TVar._counter += 1
@@ -1053,15 +1053,11 @@ def occurs(v, t, subst):
         return occurs(v, t.arg, subst) or occurs(v, t.res, subst)
     return False
 
-# Infer type of \\x. x
 a = TVar()
 subst = unify(a, a)
-print("\\x. x :", TFun(a, a))
+print("\\\\x. x :", TFun(a, a))
 `},
- "dfa-min":{python:`# DFA minimization via Hopcroft-style partition refinement
-
-def minimize_dfa(states, alphabet, transitions, start, accept):
-    # Remove unreachable states
+ "dfa-min":{python:`def minimize_dfa(states, alphabet, transitions, start, accept):
     reachable = set()
     stack = [start]
     while stack:
@@ -1075,7 +1071,6 @@ def minimize_dfa(states, alphabet, transitions, start, accept):
     states = reachable & set(states)
     accept = reachable & set(accept)
 
-    # Partition
     P = [accept, states - accept]
     P = [b for b in P if b]
 
@@ -1102,27 +1097,23 @@ def minimize_dfa(states, alphabet, transitions, start, accept):
                     break
             else:
                 new_P.append(block)
-        # Deduplicate
         seen = []
         for b in new_P:
             if b not in seen: seen.append(b)
         P = seen
     return P
 
-# Example: minimal DFA for (a|b)*ab
 print("Minimize DFA with 4 states")
 `},
  "cyk":{python:`def cyk(grammar, sentence):
     words = sentence.split()
     n = len(words)
     table = [[set() for _ in range(n)] for _ in range(n)]
-    # Lexical rules
     for i, w in enumerate(words):
         for A, prods in grammar.items():
             for p in prods:
                 if len(p) == 1 and p[0] == w:
                     table[i][i].add(A)
-    # Binary rules
     for length in range(2, n+1):
         for i in range(n-length+1):
             j = i + length - 1
@@ -1144,10 +1135,7 @@ grammar = {
 ok, table = cyk(grammar, "the cat ate the dog")
 print("Accepted:", ok)
 `},
- "cfg":{python:`# Build a CFG from a simple program
-
-def build_cfg(instructions):
-    # instructions: list of (op, args)
+ "cfg":{python:`def build_cfg(instructions):
     blocks = []
     current = []
     labels = {}
@@ -1156,17 +1144,13 @@ def build_cfg(instructions):
             if current:
                 blocks.append(current); current = []
             labels[args[0]] = len(blocks)
-        elif op == "goto":
-            if current: blocks.append(current); current = []
-            # record edge from this block to the target
-        elif op == "if":
+        elif op in ("goto", "if"):
             if current: blocks.append(current); current = []
         else:
             current.append((i, op, args))
     if current: blocks.append(current)
     return blocks, labels
 
-# Example: simple loop
 instructions = [
     ("assign", ("i", 0)),
     ("label", ("L1",)),
@@ -1182,10 +1166,7 @@ print("Blocks:", len(blocks))
 for b in blocks:
     print(b)
 `},
- "ssa":{python:`# Very small SSA construction for straight-line code
-
-def to_ssa(instructions):
-    # instructions: list of (dest, op, arg1, arg2)
+ "ssa":{python:`def to_ssa(instructions):
     counters = {}
     rename = {}
     out = []
@@ -1211,14 +1192,10 @@ for instr in to_ssa(prog):
     print(instr)
 `},
  "reaching":{python:`def reaching_definitions(blocks, succs, preds):
-    # blocks: list of (name, [defs])
-    # succs: dict name -> [names]
-    # preds: dict name -> [names]
     defs = {}
     for name, dlist in blocks:
         for d in dlist:
             defs[d] = name
-    # GEN and KILL
     GEN = {}; KILL = {}
     for name, dlist in blocks:
         GEN[name] = set(dlist)
@@ -1230,7 +1207,6 @@ for instr in to_ssa(prog):
                     for d2 in dlist:
                         if d2.split(":")[0] == var:
                             KILL[name].add(d)
-    # Iterate
     IN = {n: set() for n, _ in blocks}
     OUT = {n: set() for n, _ in blocks}
     changed = True
@@ -1253,7 +1229,6 @@ IN, OUT = reaching_definitions(blocks, succs, preds)
 for n in IN: print(n, "IN:", IN[n], "OUT:", OUT[n])
 `},
  "liveness":{python:`def liveness(blocks, succs, preds):
-    # blocks: list of (name, uses, defs)
     USE = {}; DEF = {}
     for name, uses, defs in blocks:
         USE[name] = set(uses); DEF[name] = set(defs)
@@ -1279,9 +1254,6 @@ IN, OUT = liveness(blocks, succs, preds)
 for n in IN: print(n, "IN:", IN[n], "OUT:", OUT[n])
 `},
  "const-prop":{python:`def constant_propagation(program):
-    # program: list of (var, op, a, b)
-    # op: '=', '+', '-', '*', '/'
-    # a, b: int or var
     consts = {}
     def val(x):
         return x if isinstance(x, int) else consts.get(x, "NAC")
@@ -1303,31 +1275,20 @@ for n in IN: print(n, "IN:", IN[n], "OUT:", OUT[n])
                 out.append((var, op, va, vb))
     return out, consts
 
-prog = [
-    ("a", "=", 1, None),
-    ("b", "=", 2, None),
-    ("c", "+", "a", "b"),
-    ("d", "*", "c", 2),
-]
+prog = [("a","=",1,None),("b","=",2,None),("c","+","a","b"),("d","*","c",2)]
 out, consts = constant_propagation(prog)
 for o in out: print(o)
 print("Constants:", consts)
 `},
- "const-fold":{python:`# Constant folding + dead code elimination on a simple IR
-
-def fold_and_dce(program):
-    # program: list of (dest, op, args) or (op, args)
-    # op: '=', '+', '*', 'return'
+ "const-fold":{python:`def fold_and_dce(program):
     consts = {}
     out = []
     for instr in program:
         if instr[0] == "return":
-            # DCE: only keep what is needed
             out.append(instr)
             needed = set()
             if isinstance(instr[1], str):
                 needed.add(instr[1])
-            # backward pass
             for i in range(len(out) - 2, -1, -1):
                 dest = out[i][0]
                 if dest in needed:
@@ -1355,18 +1316,13 @@ def fold_and_dce(program):
     return out
 
 prog = [
-    ("a", "=", (1,)),
-    ("b", "=", (2,)),
-    ("c", "+", ("a", "b")),
-    ("d", "*", ("c", 2)),
-    ("e", "=", (99,)),
-    ("return", ("d",)),
+    ("a", "=", (1,)), ("b", "=", (2,)),
+    ("c", "+", ("a", "b")), ("d", "*", ("c", 2)),
+    ("e", "=", (99,)), ("return", ("d",)),
 ]
-result = fold_and_dce(prog)
-for r in result: print(r)
+for r in fold_and_dce(prog): print(r)
 `},
  "cse":{python:`def cse(program):
-    # program: list of (dest, op, a, b)
     table = {}
     out = []
     for dest, op, a, b in program:
@@ -1387,12 +1343,9 @@ prog = [
     ("t3", "*", "t1", "t2"),
     ("t4", "*", "t1", "t2"),
 ]
-result = cse(prog)
-for r in result: print(r)
+for r in cse(prog): print(r)
 `},
  "licm":{python:`def licm(loop_body, loop_var, loop_invariants):
-    # loop_body: list of (dest, op, args)
-    # returns (hoisted, new_body)
     hoisted = []
     new_body = []
     defined_in_loop = {d for d, _, _ in loop_body}
@@ -1418,7 +1371,6 @@ print("Hoisted:", hoisted)
 print("Body:", new_body)
 `},
  "strength":{python:`def strength_reduce(loop_body, iv, multiplier):
-    # Replace iv * multiplier with a running sum
     new_body = []
     running = f"_{iv}_times_{multiplier}"
     for dest, op, args in loop_body:
@@ -1429,18 +1381,10 @@ print("Body:", new_body)
             new_body.append((dest, op, args))
     return new_body
 
-body = [
-    ("t", "*", ("i", 4)),
-    ("s", "+", ("s", "t")),
-]
-result = strength_reduce(body, "i", 4)
-for r in result: print(r)
+body = [("t", "*", ("i", 4)), ("s", "+", ("s", "t"))]
+for r in strength_reduce(body, "i", 4): print(r)
 `},
- "instr-select":{python:`# Simple tree-tiling instruction selection
-
-COSTS = {
-    "ADD": 1, "MUL": 3, "FMA": 3, "LOAD": 2, "CONST": 0,
-}
+ "instr-select":{python:`COSTS = {"ADD": 1, "MUL": 3, "FMA": 3, "LOAD": 2, "CONST": 0}
 
 def select(node):
     if isinstance(node, int):
@@ -1450,7 +1394,6 @@ def select(node):
     op, a, b = node
     if op == "+":
         (ca, _), (cb, _) = select(a), select(b)
-        # Try FMA if a is a MUL
         if isinstance(a, tuple) and a[0] == "*":
             (cm, x, y) = select(a)[0]
             return ("FMA", x, y, b), 3
@@ -1459,32 +1402,22 @@ def select(node):
         (ca, _), (cb, _) = select(a), select(b)
         return ("MUL", ca, cb), COSTS["MUL"] + select(a)[1] + select(b)[1]
 
-# a + b * c
 tree = ("+", "a", ("*", "b", "c"))
 instr, cost = select(tree)
 print(instr, "cost =", cost)
 `},
  "reg-alloc":{python:`def linear_scan(intervals, K):
-    # intervals: list of (name, start, end)
     intervals = sorted(intervals, key=lambda x: x[1])
     active = []
-    free = list(range(K))
     assign = {}
     for name, start, end in intervals:
-        # expire
+        used = {r for (n, e, r) in active if e > start}
         active = [(n, e, r) for (n, e, r) in active if e > start]
-        free = [r for r in free] + [r for (n, e, r) in
-                                     [(n, e, r) for (n, e, r) in active if False]]
-        # Actually free registers held by expired intervals
-        expired = [(n, e, r) for (n, e, r) in []]
-        # simpler: recompute free
-        used = {r for (n, e, r) in active}
         free = [r for r in range(K) if r not in used]
         if not free:
-            # spill the one with the furthest end
             spill = max(active, key=lambda x: x[1])
             if spill[1] > end:
-                assign[spill[0]] = None  # spilled
+                assign[spill[0]] = None
                 active.remove(spill)
                 r = spill[2]
             else:
@@ -1504,25 +1437,19 @@ print(linear_scan(intervals, 3))
     for instr in instructions:
         if out:
             prev = out[-1]
-            # load r, x ; load r, x -> load r, x
             if prev == instr and prev[0] == "load":
                 continue
-            # add r, 0 -> skip
             if instr[0] == "add" and instr[2] == 0:
                 continue
-            # mul r, 2 -> add r, r
             if instr[0] == "mul" and instr[2] == 2:
-                out[-1] = ("add", instr[1], instr[1])
+                out.append(("add", instr[1], instr[1]))
                 continue
         out.append(instr)
     return out
 
 prog = [
-    ("load", "r1", "x"),
-    ("load", "r1", "x"),
-    ("mul", "r2", 2),
-    ("add", "r3", 0),
-    ("mov", "r4", "r4"),
+    ("load", "r1", "x"), ("load", "r1", "x"),
+    ("mul", "r2", 2), ("add", "r3", 0), ("mov", "r4", "r4"),
 ]
 for i in peephole(prog): print(i)
 `},
@@ -1557,8 +1484,6 @@ taint_analysis(program, {"input"}, set(), {"sink"})
  "symbolic-exec":{python:`from itertools import product
 
 def symbolic_exec(program, inputs):
-    # program: list of (op, args)
-    # returns list of (path_condition, state, result)
     paths = [([], {}, "end")]
     for x in inputs:
         paths[0][1][x] = x
@@ -1571,7 +1496,7 @@ def symbolic_exec(program, inputs):
                 new_state[dest] = expr
                 new_paths.append((conds, new_state, res))
             elif op == "if":
-                cond, then, else_ = args
+                cond = args[0]
                 new_paths.append((conds + [cond], dict(state), res))
                 new_paths.append((conds + [f"not ({cond})"], dict(state), res))
             elif op == "assert":
@@ -1580,44 +1505,29 @@ def symbolic_exec(program, inputs):
     return paths
 
 program = [
-    ("if", ("x > 0", None, None)),
-    ("if", ("y == x * 2", None, None)),
+    ("if", ("x > 0",)),
+    ("if", ("y == x * 2",)),
     ("assert", ("y > 0",)),
 ]
-paths = symbolic_exec(program, ["x", "y"])
-for c, s, r in paths:
+for c, s, r in symbolic_exec(program, ["x", "y"]):
     print("Path:", c, "Result:", r)
 `},
  "hoare":{python:`def hoare_verify(invariant, pre, post, body, n):
-    # Check: pre -> invariant
-    # Check: invariant and B -> invariant after body
-    # Check: invariant and not B -> post
-    # This is a very simplified symbolic check for the sum example.
-    # I: s = i*(i+1)//2
-    # pre: n >= 0 and s = 0 and i = 0
-    # post: s = n*(n+1)//2
     checks = []
-    # pre -> I
     pre_ok = (0 == 0*(0+1)//2)
     checks.append(("pre -> I", pre_ok))
-    # I and i < n -> I[i := i+1, s := s+i+1]
-    # symbolic: s' = i'(i'+1)/2 where i' = i+1, s' = s + i + 1
-    # s + i + 1 = (i+1)(i+2)/2
-    # s = i(i+1)/2 (from invariant)
-    # i(i+1)/2 + i + 1 = (i^2 + i + 2i + 2)/2 = (i^2 + 3i + 2)/2
-    # (i+1)(i+2)/2 = (i^2 + 3i + 2)/2  ✓
     preserve_ok = True
     checks.append(("I and i < n -> I after body", preserve_ok))
-    # I and i >= n -> post
     exit_ok = True
     checks.append(("I and i >= n -> post", exit_ok))
     return checks
 
 for c in hoare_verify(None, None, None, None, 0):
     print(c)
-`},
+`}
 };
-
+</script>
+<script>
 /* ============================================================
    Utilities
    ============================================================ */
@@ -1633,7 +1543,8 @@ function fmtNum(x,d=4){
  return parseFloat(x.toFixed(d)).toString();
 }
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-
+</script>
+<script>
 /* ============================================================
    Labs
    ============================================================ */
@@ -1654,8 +1565,7 @@ function demoLexer(text){
   ["COMMENT",/#.*/],
  ];
  const tokens=[];
- let i=0;
- let err=null;
+ let i=0, err=null;
  while(i<text.length){
   let matched=false;
   for(const [name,re] of specs){
@@ -1685,9 +1595,7 @@ function demoRegexFsm(text){
  if(!lines.length)throw Error('Enter a regex on the first line and a test string on the second.');
  const regex=lines[0].replace(/\s+/g,'');
  const test=lines[1]||'';
- // Build a simple NFA from the regex (literals, |, *, +, ?, parens)
  function parseRegex(s){
-  // Very small recursive descent for regex
   let i=0;
   function parseAlternation(){
    let left=parseConcat();
@@ -1696,69 +1604,35 @@ function demoRegexFsm(text){
   }
   function parseConcat(){
    let items=[];
-   while(i<s.length&&s[i]!=='|'&&s[i]!==')'){
-    items.push(parseRepeat());
-   }
+   while(i<s.length&&s[i]!=='|'&&s[i]!==')')items.push(parseRepeat());
    return items.length?items.reduce((a,b)=>({type:'cat',a,b})):{type:'eps'};
   }
   function parseRepeat(){
    let atom=parseAtom();
-   while(s[i]==='*'||s[i]==='+'||s[i]==='?'){
-    const op=s[i++];
-    atom={type:op,a:atom};
-   }
+   while(s[i]==='*'||s[i]==='+'||s[i]==='?'){const op=s[i++];atom={type:op,a:atom}}
    return atom;
   }
   function parseAtom(){
    if(s[i]==='('){i++;const e=parseAlternation();if(s[i]===')')i++;return e}
-   if(i<s.length){return {type:'lit',c:s[i++]}}
+   if(i<s.length)return {type:'lit',c:s[i++]};
    return {type:'eps'};
   }
   return parseAlternation();
  }
  const ast=parseRegex(regex);
- // Build NFA with numbered states
  let nstate=0;
  function newState(){return nstate++}
  function build(node){
   if(node.type==='eps'){const s=newState(),a=newState();return {start:s,accept:a,eps:[[s,a]],trans:[]}}
   if(node.type==='lit'){const s=newState(),a=newState();return {start:s,accept:a,eps:[],trans:[[s,node.c,a]]}}
-  if(node.type==='cat'){
-   const A=build(node.a),B=build(node.b);
-   return {start:A.start,accept:B.accept,eps:A.eps.concat(B.eps).concat([[A.accept,B.start]]),trans:A.trans.concat(B.trans)};
-  }
-  if(node.type==='alt'){
-   const A=build(node.a),B=build(node.b);
-   const s=newState(),a=newState();
-   return {start:s,accept:a,
-    eps:A.eps.concat(B.eps).concat([[s,A.start],[s,B.start],[A.accept,a],[B.accept,a]]),
-    trans:A.trans.concat(B.trans)};
-  }
-  if(node.type==='*'){
-   const A=build(node.a);
-   const s=newState(),a=newState();
-   return {start:s,accept:a,
-    eps:A.eps.concat([[s,A.start],[s,a],[A.accept,A.start],[A.accept,a]]),
-    trans:A.trans};
-  }
-  if(node.type==='+'){
-   const A=build(node.a);
-   const s=newState(),a=newState();
-   return {start:s,accept:a,
-    eps:A.eps.concat([[s,A.start],[A.accept,A.start],[A.accept,a]]),
-    trans:A.trans};
-  }
-  if(node.type==='?'){
-   const A=build(node.a);
-   const s=newState(),a=newState();
-   return {start:s,accept:a,
-    eps:A.eps.concat([[s,A.start],[s,a],[A.accept,a]]),
-    trans:A.trans};
-  }
+  if(node.type==='cat'){const A=build(node.a),B=build(node.b);return {start:A.start,accept:B.accept,eps:A.eps.concat(B.eps).concat([[A.accept,B.start]]),trans:A.trans.concat(B.trans)}}
+  if(node.type==='alt'){const A=build(node.a),B=build(node.b);const s=newState(),a=newState();return {start:s,accept:a,eps:A.eps.concat(B.eps).concat([[s,A.start],[s,B.start],[A.accept,a],[B.accept,a]]),trans:A.trans.concat(B.trans)}}
+  if(node.type==='*'){const A=build(node.a);const s=newState(),a=newState();return {start:s,accept:a,eps:A.eps.concat([[s,A.start],[s,a],[A.accept,A.start],[A.accept,a]]),trans:A.trans}}
+  if(node.type==='+'){const A=build(node.a);const s=newState(),a=newState();return {start:s,accept:a,eps:A.eps.concat([[s,A.start],[A.accept,A.start],[A.accept,a]]),trans:A.trans}}
+  if(node.type==='?'){const A=build(node.a);const s=newState(),a=newState();return {start:s,accept:a,eps:A.eps.concat([[s,A.start],[s,a],[A.accept,a]]),trans:A.trans}}
   throw Error('Unknown node');
  }
  const nfa=build(ast);
- // Simulate NFA on test string
  function epsClosure(states){
   const set=new Set(states);
   const stack=[...states];
@@ -1774,7 +1648,7 @@ function demoRegexFsm(text){
  for(const ch of test){
   const next=[];
   for(const [a,c,b] of nfa.trans){
-   if(a!=null&&current.has(a)&&c===ch)next.push(b);
+   if(current.has(a)&&c===ch)next.push(b);
   }
   current=epsClosure(next);
   if(!current.size)break;
@@ -1791,7 +1665,6 @@ function demoSubsetConstruction(text){
  const lines=text.trim().split(/\n/).filter(Boolean);
  if(!lines.length)throw Error('Enter a regex on the first line.');
  const regex=lines[0].replace(/\s+/g,'');
- // Reuse the NFA builder from demoRegexFsm (simplified inline)
  function parseRegex(s){
   let i=0;
   function parseAlternation(){
@@ -1801,7 +1674,7 @@ function demoSubsetConstruction(text){
   }
   function parseConcat(){
    let items=[];
-   while(i<s.length&&s[i]!=='|'&&s[i]!==')'){items.push(parseRepeat())}
+   while(i<s.length&&s[i]!=='|'&&s[i]!==')')items.push(parseRepeat());
    return items.length?items.reduce((a,b)=>({type:'cat',a,b})):{type:'eps'};
   }
   function parseRepeat(){
@@ -1835,9 +1708,10 @@ function demoSubsetConstruction(text){
   while(stack.length){const s=stack.pop();for(const [a,b] of nfa.eps){if(a===s&&!set.has(b)){set.add(b);stack.push(b)}}}
   return set;
  }
- const startKey=[...epsClosure([nfa.start])].sort((a,b)=>a-b).join(',');
+ const startClosure=epsClosure([nfa.start]);
+ const startKey=[...startClosure].sort((a,b)=>a-b).join(',');
  const dfaStates=new Map();
- dfaStates.set(startKey,{name:'D0',set:epsClosure([nfa.start]),accept:epsClosure([nfa.start]).has(nfa.accept)});
+ dfaStates.set(startKey,{name:'D0',set:startClosure,accept:startClosure.has(nfa.accept)});
  let counter=1;
  const queue=[startKey];
  const transitions=[];
@@ -1860,26 +1734,22 @@ function demoSubsetConstruction(text){
    transitions.push({from:cur.name,on:a,to:dfaStates.get(nkey).name});
   }
  }
- const lines=[...dfaStates.values()].map(s=>`  ${s.name} ${s.accept?'(accept)':''}  = {${[...s.set].sort((a,b)=>a-b).join(',')}}`);
+ const stateLines=[...dfaStates.values()].map(s=>`  ${s.name} ${s.accept?'(accept)':''}  = {${[...s.set].sort((a,b)=>a-b).join(',')}}`);
  const transLines=transitions.map(t=>`  ${t.from} --${t.on}--> ${t.to}`);
  return {
-  encoded:`Regex: ${regex}\nAlphabet: {${alphabet.join(', ')}}\n\nNFA states: ${nstate}\nDFA states: ${dfaStates.size}\n\nDFA states:\n${lines.join('\n')}\n\nDFA transitions:\n${transLines.join('\n')}`,
+  encoded:`Regex: ${regex}\nAlphabet: {${alphabet.join(', ')}}\n\nNFA states: ${nstate}\nDFA states: ${dfaStates.size}\n\nDFA states:\n${stateLines.join('\n')}\n\nDFA transitions:\n${transLines.join('\n')}`,
   decoded:`Subset construction converts the NFA into a DFA whose states are sets of NFA states. The DFA accepts the same language and runs in linear time.`
  };
 }
 
 /* 2 Recursive descent */
 function demoRecursiveDescent(text){
- // Tokenize
  const raw=text.trim();
  const tokens=[];
  const re=/\s*(\d+|[A-Za-z_]\w*|[()+\-*/])/g;
- let m;
- let lastIndex=0;
+ let m,lastIndex=0;
  while((m=re.exec(raw))!==null){
-  if(m.index!==lastIndex){
-   throw Error(`Unexpected character at position ${lastIndex}: '${raw[lastIndex]}'`);
-  }
+  if(m.index!==lastIndex)throw Error(`Unexpected character at position ${lastIndex}: '${raw[lastIndex]}'`);
   tokens.push(m[1]);
   lastIndex=re.lastIndex;
  }
@@ -1887,41 +1757,21 @@ function demoRecursiveDescent(text){
  let pos=0;
  function peek(){return tokens[pos]}
  function consume(expected){
-  if(expected!==undefined&&peek()!==expected){
-   throw Error(`Expected '${expected}', got '${peek()}'`);
-  }
+  if(expected!==undefined&&peek()!==expected)throw Error(`Expected '${expected}', got '${peek()}'`);
   return tokens[pos++];
  }
- // E -> T E'
- // E' -> + T E' | epsilon
- // T -> F T'
- // T' -> * F T' | epsilon
- // F -> ( E ) | id | num
  function E(){
   let left=T();
-  while(peek()==='+'||peek()==='-'){
-   const op=consume();
-   const right=T();
-   left={op,left,right};
-  }
+  while(peek()==='+'||peek()==='-'){const op=consume();const right=T();left={op,left,right}}
   return left;
  }
  function T(){
   let left=F();
-  while(peek()==='*'||peek()==='/'){
-   const op=consume();
-   const right=F();
-   left={op,left,right};
-  }
+  while(peek()==='*'||peek()==='/'){const op=consume();const right=F();left={op,left,right}}
   return left;
  }
  function F(){
-  if(peek()==='('){
-   consume('(');
-   const e=E();
-   consume(')');
-   return e;
-  }
+  if(peek()==='('){consume('(');const e=E();consume(')');return e}
   const t=consume();
   if(/^\d+$/.test(t))return {num:parseInt(t)};
   return {id:t};
@@ -1942,12 +1792,7 @@ function demoRecursiveDescent(text){
 /* 2 Pratt parser */
 function demoPratt(text){
  const tokens=text.match(/\d+|[A-Za-z_]\w*|[+\-*/()]/g)||[];
- const bindingPower={
-  '+':{l:10,r:11},
-  '-':{l:10,r:11},
-  '*':{l:20,r:21},
-  '/':{l:20,r:21},
- };
+ const bp={'+':{l:10,r:11},'-':{l:10,r:11},'*':{l:20,r:21},'/':{l:20,r:21}};
  let pos=0;
  function peek(){return tokens[pos]}
  function consume(){return tokens[pos++]}
@@ -1955,29 +1800,17 @@ function demoPratt(text){
   let left;
   const tok=peek();
   if(tok===undefined)throw Error('Unexpected end of input');
-  if(tok==='('){
-   consume();
-   left=parseExpr(0);
-   if(consume()!==')')throw Error('Expected )');
-  } else if(tok==='-'){
-   consume();
-   left={op:'neg',arg:parseExpr(25)};
-  } else if(/^\d+$/.test(tok)){
-   consume();
-   left={num:parseInt(tok)};
-  } else if(/^[A-Za-z_]/.test(tok)){
-   consume();
-   left={id:tok};
-  } else {
-   throw Error(`Unexpected token '${tok}'`);
-  }
+  if(tok==='('){consume();left=parseExpr(0);if(consume()!==')')throw Error('Expected )')}
+  else if(tok==='-'){consume();left={op:'neg',arg:parseExpr(25)}}
+  else if(/^\d+$/.test(tok)){consume();left={num:parseInt(tok)}}
+  else if(/^[A-Za-z_]/.test(tok)){consume();left={id:tok}}
+  else throw Error(`Unexpected token '${tok}'`);
   while(true){
    const op=peek();
-   if(!op||!bindingPower[op])break;
-   const bp=bindingPower[op];
-   if(bp.l<=minBP)break;
+   if(!op||!bp[op])break;
+   if(bp[op].l<=minBP)break;
    consume();
-   const right=parseExpr(bp.r);
+   const right=parseExpr(bp[op].r);
    left={op,left,right};
   }
   return left;
@@ -2002,23 +1835,14 @@ function demoAst(text){
  let pos=0;
  function peek(){return tokens[pos]}
  function consume(){return tokens[pos++]}
- // Simple: parse an assignment or an expression
  function parseExpr(){
   let left=parseTerm();
-  while(peek()==='+'||peek()==='-'){
-   const op=consume();
-   const right=parseTerm();
-   left={op,left,right};
-  }
+  while(peek()==='+'||peek()==='-'){const op=consume();const right=parseTerm();left={op,left,right}}
   return left;
  }
  function parseTerm(){
   let left=parseFactor();
-  while(peek()==='*'||peek()==='/'){
-   const op=consume();
-   const right=parseFactor();
-   left={op,left,right};
-  }
+  while(peek()==='*'||peek()==='/'){const op=consume();const right=parseFactor();left={op,left,right}}
   return left;
  }
  function parseFactor(){
@@ -2036,11 +1860,10 @@ function demoAst(text){
   ast=parseExpr();
  }
  if(pos<tokens.length)throw Error(`Unexpected token: '${tokens[pos]}'`);
- // Symbol table
  const symbols={};
  function collect(n){
   if(n.assign){symbols[n.assign.name]='var';collect(n.assign.value);return}
-  if(n.id){symbols[n.id]=(symbols[n.id]||'var');return}
+  if(n.id){symbols[n.id]='var';return}
   if(n.num!==undefined)return;
   collect(n.left);collect(n.right);
  }
@@ -2067,26 +1890,20 @@ function demoTypeCheck(text){
  for(const line of lines){
   const m=line.match(/^\s*(int|float|string|bool)\s+([A-Za-z_]\w*)\s*=\s*(.+)$/);
   if(m){
-   const type=m[1];
-   const name=m[2];
-   const expr=m[3];
-   // Simple check: literal type
+   const type=m[1], name=m[2], expr=m[3].trim();
    let exprType='unknown';
-   if(/^\d+$/.test(expr.trim()))exprType='int';
-   else if(/^\d+\.\d+$/.test(expr.trim()))exprType='float';
-   else if(/^".*"$/.test(expr.trim()))exprType='string';
-   else if(expr.trim()==='true'||expr.trim()==='false')exprType='bool';
-   else if(env[expr.trim()])exprType=env[expr.trim()];
-   else exprType='unknown';
-   if(exprType!=='unknown'&&exprType!==type){
-    errors.push(`Type mismatch: cannot assign ${exprType} to ${type} variable '${name}'`);
-   }
+   if(/^\d+$/.test(expr))exprType='int';
+   else if(/^\d+\.\d+$/.test(expr))exprType='float';
+   else if(/^".*"$/.test(expr))exprType='string';
+   else if(expr==='true'||expr==='false')exprType='bool';
+   else if(env[expr])exprType=env[expr];
+   if(exprType!=='unknown'&&exprType!==type)errors.push(`Type mismatch: cannot assign ${exprType} to ${type} variable '${name}'`);
    env[name]=type;
   } else {
    exprLines.push(line.trim());
   }
  }
- // Check expressions
+ const results=[];
  for(const line of exprLines){
   const parts=line.split(/([+\-*/])/).map(s=>s.trim()).filter(Boolean);
   let result='unknown';
@@ -2100,25 +1917,20 @@ function demoTypeCheck(text){
    else t=env[p]||'unknown';
    types.push(t);
   }
-  if(types.includes('unknown')){
-   errors.push(`Expression '${line}': unknown variable`);
-   result='unknown';
-  } else if(types.every(t=>t==='int'))result='int';
+  if(types.includes('unknown')){errors.push(`Expression '${line}': unknown variable`);result='unknown'}
+  else if(types.every(t=>t==='int'))result='int';
   else if(types.every(t=>t==='int'||t==='float'))result='float';
   else errors.push(`Expression '${line}': cannot apply arithmetic to ${types.join(', ')}`);
-  if(result!=='unknown')env['_expr']=result;
+  results.push(`${line} : ${result}`);
  }
  return {
-  encoded:`Environment:\n${Object.entries(env).filter(([k])=>k!=='_expr').map(([k,v])=>`  ${k}: ${v}`).join('\n')||'  (empty)'}\n\nErrors:\n${errors.length?errors.map(e=>'  '+e).join('\n'):'  (none)'}`,
+  encoded:`Environment:\n${Object.entries(env).map(([k,v])=>`  ${k}: ${v}`).join('\n')||'  (empty)'}\n\nExpression types:\n${results.map(r=>'  '+r).join('\n')||'  (none)'}\n\nErrors:\n${errors.length?errors.map(e=>'  '+e).join('\n'):'  (none)'}`,
   decoded:`Type checking assigns types to variables and checks that operations are valid for their operand types. This simple example does not handle polymorphism or subtyping.`
  };
 }
 
 /* 3 Hindley-Milner */
 function demoHm(text){
- // Simplified HM: infer types of lambda expressions and applications
- // Grammar: e := \x. e | e e | x | ( e )
- // Represent types as strings or type variables
  let typeCounter=0;
  const subst={};
  function fresh(){return 't'+(typeCounter++)}
@@ -2145,7 +1957,6 @@ function demoHm(text){
   if(typeof t==='string')return t;
   return `(${typeToString(t.arg)} -> ${typeToString(t.res)})`;
  }
- // Parse lambda expressions
  function parse(s){
   let i=0;
   function parseExpr(){
@@ -2160,7 +1971,7 @@ function demoHm(text){
    if(s[i]==='\\'){
     i++;
     let name='';
-    while(i<s.length&&/[A-Za-z_]\w*/.test(s[i])){name+=s[i++]}
+    while(i<s.length&&/[A-Za-z_]/.test(s[i]))name+=s[i++];
     if(s[i]!=='.')throw Error('Expected .');
     i++;
     const body=parseExpr();
@@ -2168,11 +1979,13 @@ function demoHm(text){
    }
    if(s[i]==='('){i++;const e=parseExpr();if(s[i]!==')')throw Error('Expected )');i++;return e}
    let name='';
-   while(i<s.length&&/[A-Za-z_]\w*/.test(s[i])){name+=s[i++]}
+   while(i<s.length&&/[A-Za-z_]/.test(s[i]))name+=s[i++];
    if(!name)throw Error(`Unexpected character at ${i}: ${s[i]||'end'}`);
    return {op:'var',name};
   }
-  return parseExpr();
+  const r=parseExpr();
+  if(i<s.length)throw Error(`Unparsed characters: '${s.slice(i)}'`);
+  return r;
  }
  function infer(node,env){
   if(node.op==='var'){
@@ -2200,7 +2013,7 @@ function demoHm(text){
   typeCounter=0;
   for(const k in subst)delete subst[k];
   try{
-   const ast=parse(line.replace(/\s+/g,' '));
+   const ast=parse(line.replace(/\s+/g,''));
    const t=infer(ast,{});
    results.push(`${line} : ${typeToString(t)}`);
   }catch(e){
@@ -2215,12 +2028,10 @@ function demoHm(text){
 
 /* 4 DFA minimization */
 function demoDfaMin(text){
- // Example DFA with states 0..3, alphabet {a, b}, accept {2}
  const states=[0,1,2,3];
  const alphabet=['a','b'];
  const transitions={ '0,a':1, '0,b':2, '1,a':1, '1,b':3, '2,a':1, '2,b':2, '3,a':1, '3,b':3 };
  const accept=new Set([2]);
- // Partition refinement
  let P=[new Set([...accept]),new Set(states.filter(s=>!accept.has(s)))].filter(s=>s.size);
  let changed=true;
  while(changed){
@@ -2244,7 +2055,7 @@ function demoDfaMin(text){
  }
  const lines=P.map((b,i)=>`  Block ${i}: {${[...b].sort().join(', ')}}`);
  return {
-  encoded:`DFA: states ${states.join(', ')}\nAlphabet: {${alphabet.join(', ')}}\nAccept: {${[...accept].join(', ')}}\nTransitions: ${JSON.stringify(transitions)}\n\nMinimal partition:\n${lines.join('\n')}\n\nMinimal DFA states: ${P.length}`,
+  encoded:`DFA: states ${states.join(', ')}\nAlphabet: {${alphabet.join(', ')}}\nAccept: {${[...accept].join(', ')}}\n\nMinimal partition:\n${lines.join('\n')}\n\nMinimal DFA states: ${P.length}`,
   decoded:`Partition refinement merges equivalent states. Each block becomes a state of the minimal DFA. Hopcroft's algorithm is O(n log n).`
  };
 }
@@ -2280,9 +2091,7 @@ function demoCyk(text){
    for(let k=i;k<j;k++){
     for(const A in grammar){
      for(const p of grammar[A]){
-      if(p.length===2&&table[i][k].has(p[0])&&table[k+1][j].has(p[1])){
-       table[i][j].add(A);
-      }
+      if(p.length===2&&table[i][k].has(p[0])&&table[k+1][j].has(p[1]))table[i][j].add(A);
      }
     }
    }
@@ -2290,7 +2099,7 @@ function demoCyk(text){
  }
  const accepted=table[0][n-1].has('S');
  return {
-  encoded:`Grammar rules: ${Object.values(grammar).reduce((s,x)=>s+x.length,0)}\nSentence: ${sentence}\nTokens: ${n}\n\nAccepted: ${accepted}\n\nCYK table (nonterminals per span):\n${table.map((row,i)=>`  i=${i}: ${row.map((s,j)=>s.size?`[${i},${j}]:{${[...s].join(',')}}`:'').filter(Boolean).join(' ')}`).join('\n')}`,
+  encoded:`Grammar rules: ${Object.values(grammar).reduce((s,x)=>s+x.length,0)}\nSentence: ${sentence}\nTokens: ${n}\n\nAccepted: ${accepted}\n\nCYK table:\n${table.map((row,i)=>`  i=${i}: ${row.map((s,j)=>s.size?`[${i},${j}]:{${[...s].join(',')}}`:'').filter(Boolean).join(' ')}`).join('\n')}`,
   decoded:`CYK fills a table bottom-up. Each cell holds the nonterminals that derive the substring. The sentence is accepted if S is in table[0][n-1].`
  };
 }
@@ -2299,13 +2108,17 @@ function demoCyk(text){
 function demoCfg(text){
  const lines=text.trim().split(/\n/).filter(Boolean);
  if(!lines.length)throw Error('Enter instructions, one per line.');
- // Parse simple three-address-like instructions
  const instructions=[];
  for(const line of lines){
-  const t=line.trim();
-  if(t.endsWith(':')){
-   instructions.push({type:'label',name:t.slice(0,-1)});
-  } else if(/^goto\s+/.test(t)){
+  let t=line.trim();
+  if(!t)continue;
+  const lm=t.match(/^([A-Za-z_]\w*):\s*(.*)$/);
+  if(lm){
+   instructions.push({type:'label',name:lm[1]});
+   t=lm[2].trim();
+   if(!t)continue;
+  }
+  if(/^goto\s+/.test(t)){
    instructions.push({type:'goto',target:t.split(/\s+/)[1]});
   } else if(/^if\s+/.test(t)){
    const m=t.match(/^if\s+(.+?)\s+goto\s+(\w+)$/);
@@ -2317,30 +2130,20 @@ function demoCfg(text){
    instructions.push({type:'assign',text:t});
   }
  }
- // Group into basic blocks
  const blocks=[];
- let current=[];
- let currentLabel=null;
+ let current=[], currentLabel=null;
  function flush(){
   if(current.length||currentLabel!==null){
    blocks.push({label:currentLabel,instructions:current});
-   current=[];
-   currentLabel=null;
+   current=[];currentLabel=null;
   }
  }
  for(const inst of instructions){
-  if(inst.type==='label'){
-   flush();
-   currentLabel=inst.name;
-  } else if(inst.type==='goto'||inst.type==='if'){
-   current.push(inst);
-   flush();
-  } else {
-   current.push(inst);
-  }
+  if(inst.type==='label'){flush();currentLabel=inst.name}
+  else if(inst.type==='goto'||inst.type==='if'){current.push(inst);flush()}
+  else current.push(inst);
  }
  flush();
- // Build edges
  const labelToBlock={};
  blocks.forEach((b,i)=>{if(b.label)labelToBlock[b.label]=i});
  const edges=[];
@@ -2377,18 +2180,14 @@ function demoCfg(text){
 /* 5 SSA */
 function demoSsa(text){
  const lines=text.trim().split(/\n/).filter(Boolean);
- // Very simplified SSA for straight-line code
  const counters={};
  const rename={};
  const out=[];
  for(const line of lines){
   const m=line.match(/^\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
   if(!m){out.push(line);continue}
-  const dest=m[1];
-  const expr=m[2];
-  function r(name){
-   return rename[name]||name;
-  }
+  const dest=m[1], expr=m[2];
+  function r(name){return rename[name]||name}
   const newDest=`${dest}_${(counters[dest]||0)+1}`;
   counters[dest]=(counters[dest]||0)+1;
   const newExpr=expr.replace(/\b[A-Za-z_]\w*\b/g,(name)=>r(name));
@@ -2397,14 +2196,84 @@ function demoSsa(text){
  }
  return {
   encoded:`SSA form:\n${out.map(l=>'  '+l).join('\n')}\n\nRenaming map: ${JSON.stringify(rename)}`,
-  decoded:`SSA gives each variable a single definition. Phi nodes are needed at join points in a full SSA construction (not shown in this straight-line example).`
+  decoded:`SSA gives each variable a single definition. Phi nodes are needed at join points in a full SSA construction.`
+ };
+}
+
+/* 6 Reaching definitions */
+function demoReaching(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const blocks=[];
+ for(const line of lines){
+  const m=line.match(/^\s*(\w+):\s*(.+)$/);
+  if(!m)continue;
+  const name=m[1];
+  const instrs=m[2].split(';').map(s=>s.trim()).filter(Boolean);
+  const defs=[];
+  for(const inst of instrs){
+   const a=inst.match(/^\s*([A-Za-z_]\w*)\s*=/);
+   if(a)defs.push(a[1]);
+  }
+  blocks.push({name,defs,instrs});
+ }
+ if(!blocks.length)throw Error('Enter blocks like "B1: x = 1; goto B2"');
+ const idxOf={}; blocks.forEach((b,i)=>idxOf[b.name]=i);
+ const succs={};
+ blocks.forEach((b,i)=>{
+  succs[b.name]=[];
+  const last=b.instrs[b.instrs.length-1]||'';
+  const gm=last.match(/goto\s+(\w+)/);
+  if(gm&&idxOf[gm[1]]!==undefined)succs[b.name].push(gm[1]);
+  if(!last.startsWith('goto')){
+   if(i+1<blocks.length)succs[b.name].push(blocks[i+1].name);
+  } else if(last.match(/if\s+.+?\s+goto/)&&i+1<blocks.length){
+   succs[b.name].push(blocks[i+1].name);
+  }
+ });
+ const preds={}; blocks.forEach(b=>preds[b.name]=[]);
+ for(const s in succs)for(const t of succs[s])if(preds[t])preds[t].push(s);
+ const defLabels={};
+ blocks.forEach(b=>{defLabels[b.name]=b.defs.map((v,i)=>`d${i+1}(${b.name}:${v})`)});
+ const GEN={},KILL={};
+ blocks.forEach(b=>{
+  GEN[b.name]=new Set();
+  b.defs.forEach((v,i)=>{
+   let killed=false;
+   for(let j=i+1;j<b.defs.length;j++)if(b.defs[j]===v){killed=true;break}
+   if(!killed)GEN[b.name].add(defLabels[b.name][i]);
+  });
+  KILL[b.name]=new Set();
+  blocks.forEach(o=>{
+   if(o.name===b.name)return;
+   o.defs.forEach((v,i)=>{if(b.defs.includes(v))KILL[b.name].add(defLabels[o.name][i])});
+  });
+ });
+ const IN={},OUT={}; blocks.forEach(b=>{IN[b.name]=new Set();OUT[b.name]=new Set()});
+ let changed=true,iter=0;
+ while(changed&&iter<100){
+  changed=false;iter++;
+  for(const b of blocks){
+   const newIN=new Set();
+   preds[b.name].forEach(p=>OUT[p].forEach(d=>newIN.add(d)));
+   const newOUT=new Set(GEN[b.name]);
+   newIN.forEach(d=>{if(!KILL[b.name].has(d))newOUT.add(d)});
+   let same=newIN.size===IN[b.name].size&&newOUT.size===OUT[b.name].size;
+   if(same){for(const d of newIN)if(!IN[b.name].has(d)){same=false;break}}
+   if(same){for(const d of newOUT)if(!OUT[b.name].has(d)){same=false;break}}
+   if(!same){IN[b.name]=newIN;OUT[b.name]=newOUT;changed=true}
+  }
+ }
+ const fmt=s=>s.size?'{'+[...s].join(', ')+'}':'{}';
+ const out=blocks.map(b=>`  ${b.name}: IN=${fmt(IN[b.name])} OUT=${fmt(OUT[b.name])}`);
+ return {
+  encoded:`Reaching definitions (${blocks.length} blocks, ${iter} iterations):\n${out.join('\n')}\n\nDefinitions:\n${blocks.map(b=>'  '+b.name+': '+b.defs.join(', ')).join('\n')}`,
+  decoded:`A definition reaches a point if there is a path from the definition to the point with no redefinition. This is a forward may-analysis.`
  };
 }
 
 /* 6 Liveness */
 function demoLiveness(text){
  const lines=text.trim().split(/\n/).filter(Boolean);
- // Parse basic blocks: each line "B1: x = 1; y = 2"
  const blocks=[];
  for(const line of lines){
   const m=line.match(/^\s*(\w+):\s*(.+)$/);
@@ -2415,8 +2284,7 @@ function demoLiveness(text){
   for(const inst of instrs){
    const assign=inst.match(/^\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
    if(assign){
-    const dest=assign[1];
-    const rhs=assign[2];
+    const dest=assign[1], rhs=assign[2];
     for(const v of rhs.match(/\b[A-Za-z_]\w*\b/g)||[]){
      if(!defs.includes(v)&&!uses.includes(v))uses.push(v);
     }
@@ -2425,11 +2293,9 @@ function demoLiveness(text){
   }
   blocks.push({name,uses,defs});
  }
- // Successors: assume linear for simplicity
  const succs={};
  blocks.forEach((b,i)=>{
-  const last=lines.find(l=>l.startsWith(b.name+':'));
-  // Look for "goto Bn" or "if ... goto Bn"
+  const last=lines.find(l=>l.startsWith(b.name+':'))||'';
   const m=last.match(/goto\s+(\w+)/);
   if(m){
    succs[b.name]=[m[1]];
@@ -2443,25 +2309,24 @@ function demoLiveness(text){
  });
  const IN={},OUT={};
  blocks.forEach(b=>{IN[b.name]=new Set();OUT[b.name]=new Set()});
- let changed=true;
- while(changed){
-  changed=false;
+ let changed=true,iter=0;
+ while(changed&&iter<100){
+  changed=false;iter++;
   for(let i=blocks.length-1;i>=0;i--){
    const b=blocks[i];
    const newOut=new Set();
    for(const s of succs[b.name])for(const v of IN[s])newOut.add(v);
    const newIn=new Set(b.uses);
    for(const v of newOut)if(!b.defs.includes(v))newIn.add(v);
-   if(newIn.size!==IN[b.name].size||newOut.size!==OUT[b.name].size){
-    IN[b.name]=newIn;OUT[b.name]=newOut;changed=true;
-   } else {
-    for(const v of newIn)if(!IN[b.name].has(v)){IN[b.name]=newIn;OUT[b.name]=newOut;changed=true;break}
-   }
+   let same=newIn.size===IN[b.name].size&&newOut.size===OUT[b.name].size;
+   if(same){for(const v of newIn)if(!IN[b.name].has(v)){same=false;break}}
+   if(same){for(const v of newOut)if(!OUT[b.name].has(v)){same=false;break}}
+   if(!same){IN[b.name]=newIn;OUT[b.name]=newOut;changed=true}
   }
  }
- const lines2=blocks.map(b=>`  ${b.name}: USE={${b.uses.join(',')}} DEF={${b.defs.join(',')}}  IN={${[...IN[b.name]].join(',')}} OUT={${[...OUT[b.name]].join(',')}}`);
+ const outLines=blocks.map(b=>`  ${b.name}: USE={${b.uses.join(',')}} DEF={${b.defs.join(',')}}  IN={${[...IN[b.name]].join(',')}} OUT={${[...OUT[b.name]].join(',')}}`);
  return {
-  encoded:`Liveness analysis:\n${lines2.join('\n')}`,
+  encoded:`Liveness analysis (${iter} iterations):\n${outLines.join('\n')}`,
   decoded:`Liveness is a backward may-analysis. A variable is live at a point if its value may be used before being redefined. The result drives register allocation.`
  };
 }
@@ -2474,20 +2339,14 @@ function demoConstFold(text){
  for(const line of lines){
   const m=line.match(/^\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
   if(!m){out.push(line);continue}
-  const dest=m[1];
-  const expr=m[2].trim();
-  // Try to evaluate
-  let val;
+  const dest=m[1], expr=m[2].trim();
+  let val=null;
   try{
    const jsExpr=expr.replace(/\b[A-Za-z_]\w*\b/g,(name)=>{
     if(name in consts)return consts[name];
     return name;
    });
-   if(/^[\d\s+\-*/().]+$/.test(jsExpr)){
-    val=eval(jsExpr);
-   } else {
-    val=null;
-   }
+   if(/^[\d\s+\-*/().]+$/.test(jsExpr))val=eval(jsExpr);
   }catch(e){val=null}
   if(val!==null){
    consts[dest]=val;
@@ -2510,10 +2369,9 @@ function demoCse(text){
  for(const line of lines){
   const m=line.match(/^\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
   if(!m){out.push(line);continue}
-  const dest=m[1];
-  const expr=m[2].trim();
+  const dest=m[1], expr=m[2].trim();
   if(table[expr]!==undefined){
-   out.push(`${dest} = ${table[expr]}   // CSE with ${expr}`);
+   out.push(`${dest} = ${table[expr]}   // CSE of ${expr}`);
   } else {
    table[expr]=dest;
    out.push(line);
@@ -2522,6 +2380,57 @@ function demoCse(text){
  return {
   encoded:`CSE result:\n${out.map(l=>'  '+l).join('\n')}\n\nExpression table: ${JSON.stringify(table)}`,
   decoded:`Common-subexpression elimination replaces repeated computations with a reference to the first result. GVN generalizes this globally.`
+ };
+}
+
+/* 7 LICM */
+function demoLicm(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const loopVar='i';
+ const hoisted=[],body=[];
+ const defined=new Set();
+ lines.forEach(l=>{const m=l.match(/^\s*([A-Za-z_]\w*)\s*=/);if(m)defined.add(m[1])});
+ for(const line of lines){
+  const m=line.match(/^\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
+  if(!m){body.push(line);continue}
+  const uses=(m[2].match(/\b[A-Za-z_]\w*\b/g)||[]);
+  const dependsOnLoopVar=uses.includes(loopVar);
+  const dependsOnLoopLocal=uses.some(u=>defined.has(u)&&u!==m[1]);
+  if(!dependsOnLoopVar&&!dependsOnLoopLocal){
+   hoisted.push(line.trim());
+  }else{
+   body.push(line);
+  }
+ }
+ return {
+  encoded:`Loop-invariant code motion:\n\nHoisted (computed once before the loop):\n${hoisted.length?hoisted.map(l=>'  '+l).join('\n'):'  (none)'}\n\nRemaining in loop:\n${body.map(l=>'  '+l).join('\n')||'  (empty)'}`,
+  decoded:`A computation is loop-invariant if none of its operands depend on the loop variable. Hoisting it removes redundant work.`
+ };
+}
+
+/* 8 Strength reduction */
+function demoStrength(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const out=[], targets=[];
+ for(const line of lines){
+  const m=line.match(/^\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)\s*\*\s*(\d+)\s*$/);
+  if(m){
+   const [_,dest,iv,k]=m;
+   const acc=`${dest}_acc`;
+   targets.push({dest,iv,k,acc});
+   out.push(`// ${line.trim()}  ->  replace multiply with running sum`);
+   out.push(`${acc} = ${k}            // before loop`);
+   out.push(`${dest} = ${acc}         // inside loop (use)`);
+   out.push(`${acc} = ${acc} + ${k}     // inside loop (update)`);
+  }else out.push(line);
+ }
+ if(!targets.length)return{
+  encoded:`No "var = loop_var * constant" pattern found.\n\nTry: t = i * 4`,
+  decoded:`Look for patterns like "var = loop_var * constant". Strength reduction replaces multiply with add.`
+ };
+ return{
+  encoded:`Strength reduction:\n${out.map(l=>'  '+l).join('\n')}`,
+  decoded:`Multiplication by a loop constant becomes an addition. The running sum is initialised before the loop and updated each iteration.`
  };
 }
 
@@ -2541,12 +2450,8 @@ function demoRegAlloc(text){
  const free=[...Array(K).keys()];
  const spill=[];
  for(const iv of intervals){
-  // Expire
   for(let i=active.length-1;i>=0;i--){
-   if(active[i].end<=iv.start){
-    free.push(active[i].reg);
-    active.splice(i,1);
-   }
+   if(active[i].end<=iv.start){free.push(active[i].reg);active.splice(i,1)}
   }
   free.sort((a,b)=>a-b);
   if(free.length){
@@ -2554,7 +2459,6 @@ function demoRegAlloc(text){
    assign[iv.name]=r;
    active.push({...iv,reg:r});
   } else {
-   // Spill the one with furthest end
    let furthest=active[0];
    for(const a of active)if(a.end>furthest.end)furthest=a;
    if(furthest.end>iv.end){
@@ -2588,23 +2492,16 @@ function demoTaint(text){
  for(const line of lines){
   const m=line.match(/^\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
   if(m){
-   const dest=m[1];
-   const expr=m[2];
-   // Check if RHS contains a source
+   const dest=m[1], expr=m[2];
    let isTainted=false;
-   for(const src of sources){
-    if(expr.includes(src)){isTainted=true;break}
-   }
-   // Check if RHS uses a tainted variable
+   for(const src of sources){if(expr.includes(src)){isTainted=true;break}}
    for(const v of tainted)if(expr.includes(v)){isTainted=true;break}
-   // Sanitizers clear taint
    for(const s of sanitizers)if(expr.includes(s)){isTainted=false;break}
    if(isTainted)tainted.add(dest);
   } else {
-   // Check for sink calls
    for(const sink of sinks){
     if(line.includes(sink+'(')||line.includes(sink+' ')){
-     for(const v of tainted)if(line.includes(v)){vulns.push(`Tainted '${v}' reaches sink '${sink}' in: ${line.trim()}`)}
+     for(const v of tainted)if(line.includes(v))vulns.push(`Tainted '${v}' reaches sink '${sink}' in: ${line.trim()}`);
     }
    }
   }
@@ -2618,8 +2515,8 @@ function demoTaint(text){
 /* 10 Symbolic execution */
 function demoSymbolicExec(text){
  const lines=text.trim().split(/\n/).filter(Boolean);
- // Very simplified: collect path conditions
  const paths=[[]];
+ let ended=false;
  for(const line of lines){
   const t=line.trim();
   const mIf=t.match(/^if\s+(.+?):$/);
@@ -2635,17 +2532,15 @@ function demoSymbolicExec(text){
   } else if(/^assert\s+(.+)$/.test(t)){
    const m=t.match(/^assert\s+(.+)$/);
    const assertion=m[1];
-   const results=paths.map(p=>{
-    const conds=p.join(' and ');
-    return {conds, assertion};
-   });
+   const results=paths.map((p,i)=>({i:i+1,conds:p.join(' and '),assertion}));
+   ended=true;
    return {
-    encoded:`Symbolic execution:\n\nPaths (${results.length}):\n${results.map((r,i)=>`  Path ${i+1}: ${r.conds}\n    Assert: ${r.assertion}`).join('\n')}\n\nNote: solving each path condition with an SMT solver would confirm or refute the assertion.`,
+    encoded:`Symbolic execution:\n\nPaths (${results.length}):\n${results.map(r=>`  Path ${r.i}: ${r.conds}\n    Assert: ${r.assertion}`).join('\n')}\n\nEach path condition would be handed to an SMT solver to confirm or refute the assertion.`,
     decoded:`Symbolic execution forks at each branch. Each path collects a path condition. An SMT solver checks whether the assertion holds on each path.`
    };
   }
  }
- return {
+ if(!ended)return{
   encoded:`No assert found. ${paths.length} path(s) so far.`,
   decoded:`Symbolic execution forks at branches. Add an assert to see the path conditions.`
  };
@@ -2654,19 +2549,19 @@ function demoSymbolicExec(text){
 /* 11 Hoare logic */
 function demoHoare(text){
  const lines=text.trim().split(/\n/).filter(Boolean);
- if(lines.length<4)throw Error('Enter: pre, invariant, body lines, post.');
- // Format: pre; invariant; body...; post
+ if(lines.length<4)throw Error('Enter: precondition, invariant, one or more body lines, postcondition.');
  const pre=lines[0];
  const invariant=lines[1];
  const post=lines[lines.length-1];
  const body=lines.slice(2,-1);
  const checks=[];
- // Parse the sum example
- const isSum=/s\s*=\s*i\s*\*\s*\(\s*i\s*\+\s*1\s*\)\s*\/\s*2/.test(invariant.replace(/\s+/g,''));
- const isPost=/s\s*=\s*n\s*\*\s*\(\s*n\s*\+\s*1\s*\)\s*\/\s*2/.test(post.replace(/\s+/g,''));
+ const invStr=invariant.replace(/\s+/g,'');
+ const postStr=post.replace(/\s+/g,'');
+ const isSum=/s=i\*\(i\+1\)\/2/.test(invStr);
+ const isPost=/s=n\*\(n\+1\)\/2/.test(postStr);
  if(isSum&&isPost){
-  checks.push({name:'pre -> invariant',ok:true});
-  checks.push({name:'invariant and i < n -> invariant after body',ok:true,reason:'s + (i+1) = (i+1)(i+2)/2 holds'});
+  checks.push({name:'pre -> invariant',ok:true,reason:'0 = 0·(0+1)/2'});
+  checks.push({name:'invariant preserved by body',ok:true,reason:'s + (i+1) = (i+1)(i+2)/2'});
   checks.push({name:'invariant and i >= n -> post',ok:true,reason:'i = n gives the closed form'});
  } else {
   checks.push({name:'pre -> invariant',ok:'unknown'});
@@ -2676,6 +2571,74 @@ function demoHoare(text){
  return {
   encoded:`Precondition: ${pre}\nInvariant: ${invariant}\nBody:\n${body.map(b=>'  '+b).join('\n')}\nPostcondition: ${post}\n\nProof obligations:\n${checks.map(c=>`  ${c.ok===true?'✓':c.ok===false?'✗':'?'} ${c.name}${c.reason?` — ${c.reason}`:''}`).join('\n')}`,
   decoded:`Hoare logic generates proof obligations: pre -> invariant, invariant is preserved by the body, and invariant and exit condition -> post. A proof assistant or SMT solver discharges them.`
+ };
+}
+
+/* 9 Instruction selection */
+function demoInstrSelect(text){
+ const tokens=text.match(/\d+|[A-Za-z_]\w*|[+\-*/()]/g)||[];
+ let pos=0;
+ function peek(){return tokens[pos]}
+ function consume(){return tokens[pos++]}
+ function expr(){
+  let left=term();
+  while(peek()==='+'||peek()==='-'){const op=consume();const right=term();left={op,left,right}}
+  return left;
+ }
+ function term(){
+  let left=atom();
+  while(peek()==='*'||peek()==='/'){const op=consume();const right=atom();left={op,left,right}}
+  return left;
+ }
+ function atom(){
+  if(peek()==='('){consume();const e=expr();consume();return e}
+  const t=consume();
+  if(/^\d+$/.test(t))return {const:parseInt(t)};
+  return {id:t};
+ }
+ const tree=expr();
+ const instrs=[];
+ function select(n){
+  if(n.const!==undefined)return {reg:`#${n.const}`,cost:0,code:[]};
+  if(n.id)return {reg:n.id,cost:0,code:[]};
+  const L=select(n.left),R=select(n.right);
+  if(n.op==='+'&&n.left.op==='*'){
+   const M=select(n.left.left),K=select(n.left.right);
+   const dest=`t${instrs.length}`;
+   instrs.push(`FMA ${dest}, ${M.reg}, ${K.reg}, ${R.reg}`);
+   return {reg:dest,cost:3+M.cost+K.cost+R.cost,code:instrs};
+  }
+  const dest=`t${instrs.length}`;
+  const opName={'+':'ADD','-':'SUB','*':'MUL','/':'DIV'}[n.op];
+  instrs.push(`${opName} ${dest}, ${L.reg}, ${R.reg}`);
+  return {reg:dest,cost:1+L.cost+R.cost,code:instrs};
+ }
+ const r=select(tree);
+ return {
+  encoded:`Expression: ${text}\n\nSelected instructions:\n${instrs.map(i=>'  '+i).join('\n')}\n\nResult register: ${r.reg}\nEstimated cost: ${r.cost}`,
+  decoded:`Instruction selection matches IR trees against instruction patterns. Fused multiply-add (FMA) computes a*b+c in one instruction.`
+ };
+}
+
+/* 9 Peephole */
+function demoPeephole(text){
+ const lines=text.trim().split(/\n/).filter(Boolean);
+ const out=[];
+ for(const line of lines){
+  const t=line.trim();
+  if(out.length){
+   const prev=out[out.length-1];
+   if(prev===t&&/^load\s+/.test(t))continue;
+   if(/^add\s+\w+,\s*0$/.test(t))continue;
+   if(/^mov\s+(\w+),\s*\1$/.test(t))continue;
+   const mMul=t.match(/^mul\s+(\w+),\s*2$/);
+   if(mMul){out.push(`add ${mMul[1]}, ${mMul[1]}`);continue}
+  }
+  out.push(t);
+ }
+ return {
+  encoded:`Peephole optimization:\n\nOriginal:\n${lines.map(l=>'  '+l).join('\n')}\n\nOptimized:\n${out.map(l=>'  '+l).join('\n')}`,
+  decoded:`Peephole optimization scans a small window and replaces instruction patterns with cheaper equivalents. It is local but effective.`
  };
 }
 
@@ -2701,16 +2664,19 @@ function runLab(l,initial){
    case'cyk':res=demoCyk(input);break;
    case'cfg':res=demoCfg(input);break;
    case'ssa':res=demoSsa(input);break;
+   case'reaching':res=demoReaching(input);break;
    case'liveness':res=demoLiveness(input);break;
    case'const-prop':res=demoConstFold(input);break;
    case'const-fold':res=demoConstFold(input);break;
    case'cse':res=demoCse(input);break;
+   case'licm':res=demoLicm(input);break;
+   case'strength':res=demoStrength(input);break;
+   case'instr-select':res=demoInstrSelect(input);break;
    case'reg-alloc':res=demoRegAlloc(input);break;
+   case'peephole':res=demoPeephole(input);break;
    case'taint':res=demoTaint(input);break;
    case'symbolic-exec':res=demoSymbolicExec(input);break;
    case'hoare':res=demoHoare(input);break;
-   case'instr-select':res=demoInstrSelect(input);break;
-   case'peephole':res=demoPeephole(input);break;
    default:throw Error('No interactive implementation is available for this lesson.');
   }
  }catch(e){
@@ -2721,81 +2687,8 @@ function runLab(l,initial){
  $('#labDecoded').textContent=res.decoded;
  if(!initial)toast('Lab complete');
 }
-
-function demoInstrSelect(text){
- // Parse a simple arithmetic expression like "a + b * c"
- const tokens=text.match(/\d+|[A-Za-z_]\w*|[+\-*/()]/g)||[];
- let pos=0;
- function peek(){return tokens[pos]}
- function consume(){return tokens[pos++]}
- function expr(){
-  let left=term();
-  while(peek()==='+'||peek()==='-'){
-   const op=consume();
-   const right=term();
-   left={op,left,right};
-  }
-  return left;
- }
- function term(){
-  let left=atom();
-  while(peek()==='*'||peek()==='/'){const op=consume();const right=atom();left={op,left,right}}
-  return left;
- }
- function atom(){
-  if(peek()==='('){consume();const e=expr();consume();return e}
-  const t=consume();
-  if(/^\d+$/.test(t))return {const:parseInt(t)};
-  return {id:t};
- }
- const tree=expr();
- const instrs=[];
- function select(n){
-  if(n.const!==undefined)return {reg:`#${n.const}`,cost:0,code:[]};
-  if(n.id)return {reg:n.id,cost:0,code:[]};
-  const L=select(n.left),R=select(n.right);
-  // Try FMA
-  if(n.op==='+'&&n.left.op==='*'){
-   const M=select(n.left.left),K=select(n.left.right);
-   const dest=`t${instrs.length}`;
-   instrs.push(`FMA ${dest}, ${M.reg}, ${K.reg}, ${R.reg}`);
-   return {reg:dest,cost:3+M.cost+K.cost+R.cost,code:instrs};
-  }
-  const dest=`t${instrs.length}`;
-  const opName={'+':'ADD','-':'SUB','*':'MUL','/':'DIV'}[n.op];
-  instrs.push(`${opName} ${dest}, ${L.reg}, ${R.reg}`);
-  return {reg:dest,cost:1+L.cost+R.cost,code:instrs};
- }
- const r=select(tree);
- return {
-  encoded:`Expression: ${text}\n\nSelected instructions:\n${instrs.map(i=>'  '+i).join('\n')}\n\nResult register: ${r.reg}\nEstimated cost: ${r.cost}`,
-  decoded:`Instruction selection matches IR trees against instruction patterns. Fused multiply-add (FMA) computes a*b+c in one instruction.`
- };
-}
-
-function demoPeephole(text){
- const lines=text.trim().split(/\n/).filter(Boolean);
- const out=[];
- for(const line of lines){
-  const t=line.trim();
-  if(out.length){
-   const prev=out[out.length-1];
-   // Duplicate load
-   if(prev===t&&/^load\s+/.test(t))continue;
-   // add r, 0
-   if(/^add\s+\w+,\s*0$/.test(t))continue;
-   // mul r, 2 -> add r, r
-   const mMul=t.match(/^mul\s+(\w+),\s*2$/);
-   if(mMul){out[out.length-1]=`add ${mMul[1]}, ${mMul[1]}`;continue}
-  }
-  out.push(t);
- }
- return {
-  encoded:`Peephole optimization:\n\nOriginal:\n${lines.map(l=>'  '+l).join('\n')}\n\nOptimized:\n${out.map(l=>'  '+l).join('\n')}`,
-  decoded:`Peephole optimization scans a small window and replaces instruction patterns with cheaper equivalents. It is local but effective.`
- };
-}
-
+</script>
+<script>
 /* ============================================================
    State and shell
    ============================================================ */
@@ -2808,7 +2701,8 @@ function load(){try{const d=JSON.parse(localStorage.getItem('az-compilers-automa
  state.bookmarks=new Set((d.bookmarks||[]).filter(id=>byId[id]));
  state.theme=['system','light','dark'].includes(d.theme)?d.theme:'system';
  state.current=byId[d.current]?d.current:null;
- state.drafts=d.drafts&&typeof d.drafts==='object'?d.drafts:{};}catch(e){}}
+ state.drafts=d.drafts&&typeof d.drafts==='object'?d.drafts:{};
+}catch(e){}}
 function applyTheme(){let t=state.theme;if(t==='system')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;$('#themeSelect').value=state.theme}
 function getChapter(id){return CHAPTERS.find(c=>c.ids.includes(id))||CHAPTERS[0]}
 function progress(){
@@ -2844,7 +2738,11 @@ function renderTree(){
 }
 function listToHTML(a){return `<ol class="steps">${a.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`}
 function refsHTML(r){return r&&r.length?`<div class="references">${r.map(x=>`<a target="_blank" rel="noopener noreferrer" href="${esc(x[1])}">${esc(x[0])} ↗</a>`).join('')}</div>`:'<p class="muted">See the recommended textbooks and papers for a full treatment.</p>'}
-function codeRecord(l){if(l.codeKey==='none')return null;return CODE[l.codeKey]||CODE[l.demo]||null}
+function codeRecord(l){
+ if(l.codeKey&&l.codeKey!=='none'&&CODE[l.codeKey])return CODE[l.codeKey];
+ if(l.demo&&l.demo!=='none'&&CODE[l.demo])return CODE[l.demo];
+ return null;
+}
 function codeText(l){
  const c=codeRecord(l);
  if(c&&c.python)return c.python;
@@ -2901,7 +2799,7 @@ function renderHome(){
  state.page='home';
  $('#mainView').innerHTML=`<div class="home-hero"><div class="eyebrow">AZ · COMPILERS AND ANALYSIS TOOLBOOK</div><h1>Understand compilers, automata and program analysis from regex to SMT-based verification.</h1><p>A single-file course covering language-processing foundations, lexing and parsing, syntax trees and semantic analysis, automata and formal languages, intermediate representations, data-flow analysis, compiler optimization, loop and memory optimization, code generation, program analysis and security, and verification and runtime systems. Every lesson has a plain explanation and most have a runnable lab.</p><div class="header-actions" style="margin:0"><button class="btn primary" id="startFirst">Start at the beginning</button><button class="btn" id="resumeLesson">Continue lesson</button></div></div>
 <div class="stats"><div class="stat"><strong>${CHAPTERS.length}</strong><span>chapters</span></div><div class="stat"><strong>${LESSONS.length}</strong><span>lessons</span></div><div class="stat"><strong>${LESSONS.filter(l=>l.demo&&l.demo!=='none').length}</strong><span>runnable labs</span></div><div class="stat"><strong>1</strong><span>standalone HTML file</span></div></div>
-<section class="panel"><div class="panel-head"><h2>Honest scope</h2><p>One app covers the whole curriculum. Production compiler software is a separate engineering project.</p></div><div class="body two"><div class="mini"><h3>What runs here</h3><p>Regex-based lexer, Thompson construction (regex → NFA), subset construction (NFA → DFA), DFA minimization by partition refinement, recursive descent parser, Pratt parser with binding powers, AST construction and symbol table, simple type checking, Hindley-Milner type inference with unification, CYK parsing, CFG construction from three-address code, SSA renaming, liveness analysis, constant folding and propagation, common-subexpression elimination, linear-scan register allocation, taint analysis, symbolic execution path conditions, Hoare logic proof obligations, instruction selection with FMA, and peephole optimization.</p></div><div class="mini"><h3>What does not run here</h3><p>Full lexer and parser generators, LR and LALR table construction, Earley parsing, PDA simulation, full SSA construction with phi nodes, dominator computation (Lengauer-Tarjan), SCCP, abstract interpretation with widening, GVN, PRE, LICM, strength reduction, vectorization, alias analysis, escape analysis, graph-coloring register allocation, instruction scheduling, SMT solving, fuzzing, model checking, JIT compilation, garbage collection, or deoptimization. For real work use LLVM, GCC, Clang, ANTLR, Bison, Flex, Z3, KLEE, angr, Dafny, or another vetted tool.</p></div></div></section>
+<section class="panel"><div class="panel-head"><h2>Honest scope</h2><p>One app covers the whole curriculum. Production compiler software is a separate engineering project.</p></div><div class="body two"><div class="mini"><h3>What runs here</h3><p>Regex-based lexer, Thompson construction, subset construction, DFA minimization, recursive descent, Pratt parser, AST and symbol table, simple type checking, Hindley-Milner inference, CYK parsing, CFG construction, SSA renaming, reaching definitions, liveness, constant folding and propagation, CSE, LICM, strength reduction, linear-scan register allocation, peephole optimization, instruction selection with FMA, taint analysis, symbolic execution path conditions, and Hoare logic proof obligations.</p></div><div class="mini"><h3>What does not run here</h3><p>Full lexer/parser generators, LR/LALR construction, Earley, PDA simulation, full SSA with phi nodes, Lengauer-Tarjan, SCCP, abstract interpretation with widening, GVN, PRE, vectorization, alias/escape analysis, graph-coloring allocation, instruction scheduling, SMT solving, fuzzing, model checking, JIT, GC, or deoptimization. For real work use LLVM, GCC, Clang, ANTLR, Bison, Flex, Z3, KLEE, angr, Dafny, or another vetted tool.</p></div></div></section>
 <div class="panel"><div class="panel-head"><h2>Course map</h2><p>Pick a chapter. The path runs from language-processing foundations to verification and runtime systems.</p></div><div class="body"><div class="chapter-cards">${CHAPTERS.map((c,i)=>`<button class="chapter-card" data-chapter="${c.id}"><span class="num">CHAPTER ${String(i+1).padStart(2,'0')} · ${c.ids.length} LESSONS</span><strong>${esc(c.title.replace(/^\d+(\.\d+)?\s*/,''))}</strong><p>${esc(c.desc)}</p></button>`).join('')}</div></div></div>
 <footer class="footer"><span>Az Compilers, Automata &amp; Program Analysis Lab</span><span>Single file · no external runtime dependencies</span></footer>`;
  $('#startFirst').onclick=()=>openLesson('source-tokens');
@@ -2976,4 +2874,6 @@ function init(){
  progress();
 }
 init();
-</script></body></html>
+</script>
+</body>
+</html>
